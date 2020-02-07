@@ -25,7 +25,11 @@ export default class SignupComponent extends Component {
         data: Obj
       })
         .then(res => {
+          // Clearing Form
           findDOMNode(this.refs.MySubmissionForm).reset();
+          // SAVING JSONWEBTOKEN
+          localStorage.setItem("JWT", JSON.stringify(res.data.Token));
+          // DIRECTING TO HOME
           window.location.assign(`/home/${res.data.User._id}`);
         })
         .catch(err => {
@@ -35,9 +39,11 @@ export default class SignupComponent extends Component {
               Messagtoshow: err.response.data.Message
             },
             () => {
-              this.setState({
-                Message: false
-              });
+              setTimeout(() => {
+                this.setState({
+                  Message: false
+                });
+              }, 3000);
             }
           );
         });

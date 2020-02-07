@@ -42,7 +42,7 @@ userSchema.methods.GenerateToken = Id => Jwt.sign({ Id }, "Islam Is Love");
 userSchema.methods.GetAvatar = function() {
   // You can use this for random image-
   // "https://gravatar.com/avatar/?="+size+"&d=retro";  For Random Image
-  const size = 200;
+  const size = 100;
   const md5 = crypto
     .createHash("md5")
     .update(this.email)
