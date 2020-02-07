@@ -3,10 +3,13 @@ const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
 exports.SignUp = AsyncWrapper(async (req, res, next) => {
-  const User = await UserModel.create(req.body);
+  const User = new UserModel(req.body);
+  User.image = User.GetAvatar();
+  await User.save();
   if (!User) {
     return next(new AppError("Server Is Not Responding", 500));
   }
+
   const Token = User.GenerateToken(User._id);
 
   res.status(201).send({
@@ -36,11 +39,17 @@ exports.LogIn = AsyncWrapper(async (req, res, next) => {
   });
 });
 
-exports.Data = (req, res, next) => {
-  res.status(200).json({
-    Message: "You Get Data"
+exports.FindOne = AsyncWrapper(async (req, res, next) => {
+  const User = await UserModel.findById(req.params.Id);
+  if (!User) {
+    return next(new AppError("Not Found", 404));
+  }
+  res.status(200).send({
+    Status: "Success",
+    User
   });
-};
+});
+
 exports.Protected = AsyncWrapper(async (req, res, next) => {
   let Token;
   // 1) Check if the Token There

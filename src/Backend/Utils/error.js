@@ -22,6 +22,7 @@ const HandleInvalidTokenErroDB = _ =>
 
 const SendErrorDev = (err, res) => {
   res.status(err.statusCode).send({
+    Data: "Not Found",
     error: err,
     Status: err.status,
     Message: err.message,

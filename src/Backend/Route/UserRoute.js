@@ -4,6 +4,6 @@ const Router = Express.Router();
 
 Router.route("/Signup").post(UserController.SignUp);
 Router.route("/Login").post(UserController.LogIn);
-Router.route("/Data").get(UserController.Protected, UserController.Data);
+Router.route("/:Id").get(UserController.FindOne);
 
 module.exports = Router;
