@@ -27,7 +27,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "db": "nodemon ./src/Backend/Server.js"
+    "db": "nodemon ./src/Backend/Server.js",
+    "ndb": "ndb ./src/Backend/Server.js"
   },
   "eslintConfig": {
     "extends": "react-app"

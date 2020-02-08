@@ -13,4 +13,9 @@ Router.route("/Me")
   .get(UserController.GetMe)
   .patch(UserController.Update);
 
+Router.route("/GetAll").get(
+  UserController.RestrictTo("admin"),
+  UserController.GetAll
+);
+
 module.exports = Router;

@@ -105,3 +105,22 @@ exports.Protected = AsyncWrapper(async (req, res, next) => {
   //   return next(new AppError("Password Changed.Please Login Again", 401));
   // }
 });
+
+// USED TO SELECT ALL THE VENDORS
+exports.GetAll = AsyncWrapper(async (req, res, next) => {
+  const Users = await UserModel.find({ role: "vendor" });
+  res.status(200).json({
+    Status: "Success",
+    Count: Users.length,
+    Users
+  });
+});
+
+exports.RestrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.User.role)) {
+      return next(new AppError("You Are Not Allowed For This Action", 401));
+    }
+    next();
+  };
+};

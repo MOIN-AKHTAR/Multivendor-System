@@ -30,6 +30,14 @@ const userSchema = Schema({
   image: {
     type: String,
     default: ""
+  },
+  role: {
+    type: String,
+    enum: {
+      values: ["user", "vendor", "admin"],
+      message: "Please Provide Allowed Role Only Such As user/vendor/admin"
+    },
+    default: "user"
   }
 });
 

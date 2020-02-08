@@ -1,6 +1,7 @@
 const App = require("./Connection");
 const Express = require("express");
 const UserRoute = require("./Route/UserRoute");
+const CategoryRoute = require("./Route/CategoryRoute");
 const AppError = require("./Utils/AppError");
 const ErrorMiddleWare = require("./Utils/error");
 
@@ -24,12 +25,12 @@ App.use((req, res, next) => {
   next();
 });
 
-
 // ALLOW EXPRESS TO READ JSON
 App.use(Express.json());
 
 // ROUTES
 App.use("/User", UserRoute);
+App.use("/Category", CategoryRoute);
 
 // It Will Be Execute When There Is No Path To Be Found
 App.all("*", (req, res, next) => {
