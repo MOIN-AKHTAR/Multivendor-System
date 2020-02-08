@@ -2,6 +2,7 @@ const App = require("./Connection");
 const Express = require("express");
 const UserRoute = require("./Route/UserRoute");
 const CategoryRoute = require("./Route/CategoryRoute");
+const ProductRoute = require("./Route/ProductRoute");
 const AppError = require("./Utils/AppError");
 const ErrorMiddleWare = require("./Utils/error");
 
@@ -31,6 +32,7 @@ App.use(Express.json());
 // ROUTES
 App.use("/User", UserRoute);
 App.use("/Category", CategoryRoute);
+App.use("/Product", ProductRoute);
 
 // It Will Be Execute When There Is No Path To Be Found
 App.all("*", (req, res, next) => {
