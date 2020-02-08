@@ -48,9 +48,9 @@ App.all("*", (req, res, next) => {
 App.use(ErrorMiddleWare);
 
 // Listening Request On PORT
-const Server = App.listen(5000, err => {
+const Server = App.listen(process.env.PORT, err => {
   if (err) throw new Error(err.message);
-  console.log("Server Is Running On Port ", 5000);
+  console.log("Server Is Running On Port ", process.env.PORT);
 });
 
 // Handle UncaughtException If Any

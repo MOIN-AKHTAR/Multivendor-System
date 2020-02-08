@@ -45,7 +45,7 @@ const userSchema = Schema({
 userSchema.methods.MatchPassword = async (Password, UserPassword) =>
   Bcrypt.compare(Password, UserPassword);
 
-userSchema.methods.GenerateToken = Id => Jwt.sign({ Id }, "Islam Is Love");
+userSchema.methods.GenerateToken = Id => Jwt.sign({ Id }, process.env.KEY);
 
 userSchema.methods.GetAvatar = function() {
   // You can use this for random image-
@@ -58,12 +58,12 @@ userSchema.methods.GetAvatar = function() {
   return "https://gravatar.com/avatar/" + md5 + "?s=" + size + "&d=retro";
 };
 
-userSchema.statics.VerifyToken = Token => Jwt.verify(Token, "Islam Is Love");
+userSchema.statics.VerifyToken = Token => Jwt.verify(Token, process.env.KEY);
 
 // Hooks
 userSchema.pre("save", async function(next) {
   if (!this.isModified("password")) return next();
-  this.password = await Bcrypt.hash(this.password, 12);
+  this.password = await Bcrypt.hash(this.password, No Of Rounds);
   next();
 });
 

@@ -11,7 +11,7 @@ process.on("unhandledRejection", err => {
 
 // Connecting With DB
 Mongoose.connect(
-  "mongodb://127.0.0.1:27017/ShoppingCart",
+  process.env.DB,
   {
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -20,9 +20,9 @@ Mongoose.connect(
   },
   err => {
     if (err) {
-      return console.log("Not Connected To Mongodb Atlas");
+      return console.log("Not Connected To Database :(");
     }
-    console.log("Connected To Mongodb Successfully!!!");
+    console.log("Connected To Database :)");
   }
 );
 
