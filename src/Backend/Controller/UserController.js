@@ -39,15 +39,42 @@ exports.LogIn = AsyncWrapper(async (req, res, next) => {
   });
 });
 
-exports.FindOne = AsyncWrapper(async (req, res, next) => {
-  const User = await UserModel.findById(req.params.Id);
-  if (!User) {
-    return next(new AppError("Not Found", 404));
-  }
+exports.GetMe = AsyncWrapper(async (req, res, next) => {
   res.status(200).send({
     Status: "Success",
-    User
+    User: req.User
   });
+});
+
+exports.Update = AsyncWrapper(async (req, res, next) => {
+  const ShallowBody = { ...req.body };
+  const NotAllowedKeys = ["password"];
+  NotAllowedKeys.forEach(Item => delete ShallowBody[Item]);
+  for (Keys in ShallowBody) {
+    req.User[Keys] = ShallowBody[Keys];
+  }
+  if (ShallowBody.email) {
+    req.User.image = req.User.GetAvatar();
+  }
+  await req.User.save();
+  res.status(200).json({
+    Status: "Success",
+    User: req.User
+  });
+});
+
+exports.ChangePassword = AsyncWrapper(async (req, res, next) => {
+  const { email = "", password = "" } = req.body;
+  if (req.User.email === email) {
+    req.User.password = password;
+    await req.User.save();
+    return res.status(200).send({
+      Status: "Success",
+      User: req.User
+    });
+  } else {
+    return next(new AppError("You Are Not Allowed To Take This Action", 401));
+  }
 });
 
 exports.Protected = AsyncWrapper(async (req, res, next) => {
@@ -71,9 +98,10 @@ exports.Protected = AsyncWrapper(async (req, res, next) => {
   // Grant Access To Other Routes-
   req.User = user;
   next();
+
+  // 4) Check if the user changed password after the token issued
+  // const Ischanged = user.PasswordChanged(Decoder.iat);
+  // if (Ischanged) {
+  //   return next(new AppError("Password Changed.Please Login Again", 401));
+  // }
 });
-// 4) Check if the user changed password after the token issued
-// const Ischanged = user.PasswordChanged(Decoder.iat);
-// if (Ischanged) {
-//   return next(new AppError("Password Changed.Please Login Again", 401));
-// }
