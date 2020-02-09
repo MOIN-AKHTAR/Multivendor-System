@@ -28,10 +28,10 @@ exports.RemoveCategory = AsyncWrapper(async (req, res, next) => {
 });
 
 exports.GetAll = AsyncWrapper(async (req, res, next) => {
-  const Cateories = await CategoryModel.find({});
+  const Categories = await CategoryModel.find({});
   res.status(200).json({
     Status: "Success",
-    Count: Cateories.length,
-    Cateories
+    Count: Categories.length,
+    Categories
   });
 });

@@ -11,7 +11,7 @@ process.on("unhandledRejection", err => {
 
 // Connecting With DB
 Mongoose.connect(
-  process.env.DB,
+  "mongodb://127.0.0.1:27017/ShoppingCart",
   {
     useCreateIndex: true,
     useNewUrlParser: true,

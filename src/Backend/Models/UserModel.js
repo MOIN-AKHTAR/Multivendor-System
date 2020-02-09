@@ -38,6 +38,14 @@ const userSchema = Schema({
       message: "Please Provide Allowed Role Only Such As user/vendor/admin"
     },
     default: "user"
+  },
+  items: {
+    type: Array,
+    default: []
+  },
+  totalAmount: {
+    type: Number,
+    default: 0
   }
 });
 
@@ -45,7 +53,7 @@ const userSchema = Schema({
 userSchema.methods.MatchPassword = async (Password, UserPassword) =>
   Bcrypt.compare(Password, UserPassword);
 
-userSchema.methods.GenerateToken = Id => Jwt.sign({ Id }, process.env.KEY);
+userSchema.methods.GenerateToken = Id => Jwt.sign({ Id }, "ISLAM IS LOVE");
 
 userSchema.methods.GetAvatar = function() {
   // You can use this for random image-
@@ -58,12 +66,12 @@ userSchema.methods.GetAvatar = function() {
   return "https://gravatar.com/avatar/" + md5 + "?s=" + size + "&d=retro";
 };
 
-userSchema.statics.VerifyToken = Token => Jwt.verify(Token, process.env.KEY);
+userSchema.statics.VerifyToken = Token => Jwt.verify(Token, "ISLAM IS LOVE");
 
 // Hooks
 userSchema.pre("save", async function(next) {
   if (!this.isModified("password")) return next();
-  this.password = await Bcrypt.hash(this.password, No Of Rounds);
+  this.password = await Bcrypt.hash(this.password, 12);
   next();
 });
 

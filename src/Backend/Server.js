@@ -3,6 +3,7 @@ const Express = require("express");
 const UserRoute = require("./Route/UserRoute");
 const CategoryRoute = require("./Route/CategoryRoute");
 const ProductRoute = require("./Route/ProductRoute");
+const AddToCartRoute = require("./Route/AddToCartRoute");
 const AppError = require("./Utils/AppError");
 const ErrorMiddleWare = require("./Utils/error");
 
@@ -33,6 +34,7 @@ App.use(Express.json());
 App.use("/User", UserRoute);
 App.use("/Category", CategoryRoute);
 App.use("/Product", ProductRoute);
+App.use("/Cart", AddToCartRoute);
 
 // It Will Be Execute When There Is No Path To Be Found
 App.all("*", (req, res, next) => {
@@ -48,9 +50,9 @@ App.all("*", (req, res, next) => {
 App.use(ErrorMiddleWare);
 
 // Listening Request On PORT
-const Server = App.listen(process.env.PORT, err => {
+const Server = App.listen(5000, err => {
   if (err) throw new Error(err.message);
-  console.log("Server Is Running On Port ", process.env.PORT);
+  console.log("Server Is Running On Port ", 5000);
 });
 
 // Handle UncaughtException If Any
@@ -64,6 +66,3 @@ process.on("uncaughtException", err => {
     process.exit(1);
   });
 });
-
-//DB = "mongodb+srv://MOIN-AKHTER:gotohell302610$$$@cluster0-ghael.mongodb.net/test?retryWrites=true&w=majority"
-//https://cloud.mongodb.com/v2/5e3a729dcf09a22e6d1caca1#metrics/replicaSet/5e3a762a3f484515d58629ed/explorer

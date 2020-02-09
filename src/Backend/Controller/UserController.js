@@ -1,4 +1,5 @@
 const UserModel = require("../Models/UserModel");
+const ProductModel = require("../Models/ProductModel");
 const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
@@ -108,11 +109,11 @@ exports.Protected = AsyncWrapper(async (req, res, next) => {
 
 // USED TO SELECT ALL THE VENDORS
 exports.GetAll = AsyncWrapper(async (req, res, next) => {
-  const Users = await UserModel.find({ role: "vendor" });
+  const Vendors = await UserModel.find({ role: "vendor" });
   res.status(200).json({
     Status: "Success",
-    Count: Users.length,
-    Users
+    Count: Vendors.length,
+    Vendors
   });
 });
 
@@ -124,3 +125,18 @@ exports.RestrictTo = (...roles) => {
     next();
   };
 };
+
+// User Can Filter Product From All Of The Available Products-
+exports.FilterProduct = AsyncWrapper(async (req, res, next) => {
+  const Products = await ProductModel.find({
+    category: req.params.Id
+  });
+  if (Products.length === 0) {
+    return next(new AppError("Sorry, Can Not Find This Prduct", 404));
+  }
+  res.status(200).json({
+    Status: "Success",
+    Count: Products.length,
+    Products
+  });
+});
