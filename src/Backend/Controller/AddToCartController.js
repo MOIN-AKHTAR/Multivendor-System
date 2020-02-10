@@ -25,17 +25,29 @@ exports.AddToCart = AsyncWrapper(async (req, res, next) => {
   if (Index < 0) {
     const AddedItem = {
       product: Product._id,
-      quantity: 1
+      vendor: Product.vendor,
+      price: Product.price,
+      quantity: 1,
+      total: Product.price * 1
     };
     req.User.items.push(AddedItem);
   } else {
     // If Item Is Exists In Items Array Of User than just update quantity of that Specific product
+    const quantity = req.User.items[Index].quantity + 1;
     const AddedItem = {
       product: Product._id,
-      quantity: req.User.items[Index].quantity + 1
+      vendor: Product.vendor,
+      price: Product.price,
+      quantity,
+      total: Product.price * quantity
     };
     req.User.items.splice(Index, 1, AddedItem);
   }
+  // req.User.totalAmount =
+  let Total = MakeTotal(req.User.items);
+  // Making Total Of User Which He/She Buy Products-
+  req.User.totalAmount = Total;
+
   // Updating User
   await req.User.save();
   if (!req.User) {
@@ -52,9 +64,11 @@ exports.AddToCart = AsyncWrapper(async (req, res, next) => {
   });
 });
 
+// This Method Will Delete Every Product Which You Added To Cart
 exports.DeleteAllFromCart = AsyncWrapper(async (req, res, next) => {
   const Count = req.User.items.length;
   req.User.items = [];
+  req.User.totalAmount = 0;
   await req.User.save();
   res.status(200).json({
     Status: "Success",
@@ -62,6 +76,7 @@ exports.DeleteAllFromCart = AsyncWrapper(async (req, res, next) => {
   });
 });
 
+// It will only delete some amount of specific product such as deleting 1 quantity of product A who's quantity is 3-
 exports.DeleteFromCart = AsyncWrapper(async (req, res, next) => {
   // Check Whether The Item Buyer Want To Buy Does Exists Or Not-
   const Index = req.User.items.findIndex(
@@ -77,11 +92,16 @@ exports.DeleteFromCart = AsyncWrapper(async (req, res, next) => {
       req.User.items.splice(Index, 1);
     } else {
       // If Item Exists In Items Array Of User than just update quantity of that Specific product
+      const quantity = req.User.items[Index].quantity - 1;
       const AddedItem = {
         product: req.User.items[Index].product,
-        quantity: req.User.items[Index].quantity - 1
+        vendor: req.User.items[Index].vendor,
+        price: req.User.items[Index].price,
+        quantity,
+        total: quantity * req.User.items[Index].price
       };
       req.User.items.splice(Index, 1, AddedItem);
+      req.User.totalAmount = MakeTotal(req.User.items);
     }
     await req.User.save();
     res.status(200).json({
@@ -102,7 +122,10 @@ exports.DeleteSpecificProdcut = AsyncWrapper(async (req, res, next) => {
       new AppError("Sorry, This Product Is Not Available Anymore", 404)
     );
   } else {
+    // Deleting Item From Items Array
     req.User.items.splice(Index, 1);
+    // Making Total After Deleting The Product From Items Array
+    req.User.totalAmount = MakeTotal(req.User.items);
   }
   await req.User.save();
   res.status(200).json({
@@ -110,3 +133,12 @@ exports.DeleteSpecificProdcut = AsyncWrapper(async (req, res, next) => {
     Message: "Deleted Item From Cart"
   });
 });
+
+// It Will Make Total Of Product Cost Which You Have To Pay-
+const MakeTotal = (Items = []) => {
+  let Total = 0;
+  Items.forEach(Item => {
+    Total = Total + Item.total;
+  });
+  return Total;
+};
