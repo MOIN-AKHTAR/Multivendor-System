@@ -20,4 +20,6 @@ Router.route("/GetAll").get(
   UserController.GetAll
 );
 
+Router.route("/Pay").post(UserController.Pay);
+
 module.exports = Router;

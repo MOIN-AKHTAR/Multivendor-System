@@ -117,6 +117,7 @@ exports.GetAll = AsyncWrapper(async (req, res, next) => {
   });
 });
 
+// Making Restriction So That Only Desired Uses Can Access This Path/Route
 exports.RestrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.User.role)) {
@@ -138,5 +139,41 @@ exports.FilterProduct = AsyncWrapper(async (req, res, next) => {
     Status: "Success",
     Count: Products.length,
     Products
+  });
+});
+
+exports.Pay = AsyncWrapper(async (req, res, next) => {
+  const Data = [];
+
+  // Removing Redundency And Optimizing Query By Accumalating Data Related To Single Vendor Into Single Object
+  req.User.items.forEach(Item => {
+    const ItemFound = Data.find(
+      Vendor => Item.vendor.toString() === Vendor.vendor.toString()
+    );
+    if (!ItemFound) {
+      const Obj = {
+        vendor: Item.vendor,
+        totalAmount: Item.total
+      };
+      Data.push(Obj);
+    } else {
+      ItemFound.totalAmount = ItemFound.totalAmount + Item.total;
+    }
+  });
+
+  // Executing Query And It Will Return Pending Promises
+  const promise = Data.map(async Item => {
+    const Vendor = await UserModel.findById(Item.vendor);
+    Vendor.totalAmount = Vendor.totalAmount + Item.totalAmount;
+    return await Vendor.save();
+  });
+
+  // Executing All The Pending Promises-
+  await Promise.all(promise);
+
+  res.status(200).json({
+    Status: "Success",
+    Count: Data.length,
+    Data
   });
 });
