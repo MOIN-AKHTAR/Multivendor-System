@@ -1,0 +1,9 @@
+#Auth {
+  width: 50%;
+  position: relative;
+  margin: 3.5rem auto;
+}
+#Btn_Section {
+  display: flex;
+  flex-direction: column;
+}

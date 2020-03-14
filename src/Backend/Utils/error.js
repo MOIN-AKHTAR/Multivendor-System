@@ -1,4 +1,5 @@
 const AppError = require("./AppError");
+const fs = require("fs");
 
 const HandleCastErrorDB = error => {
   let Message = `Invalid ${error.path} value ${error.value}`;
@@ -33,6 +34,10 @@ const SendErrorDev = (err, res) => {
 module.exports = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
+  // If Any Error Occur During Request Then Image Will Not Be Store On FS-
+  if (req.file) {
+    fs.unlink(req.file.path, err => {});
+  }
   if (error.name === "CastError") error = HandleCastErrorDB(error);
   if (error.code === 11000) error = HandleDuplicateErrorDB(error);
   if (error.name === "ValidationError") error = HandleValidationErrorDB(error);

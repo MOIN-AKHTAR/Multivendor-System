@@ -1,0 +1,23 @@
+#Side_Nav_Bar {
+  position: absolute;
+  z-index: 150;
+  width: 50%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: #fff;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.Links {
+  display: block;
+  width: 100%;
+  color: black;
+}
+@media (max-width: 30rem) {
+  #Side_Nav_Bar {
+    display: flex;
+  }
+}

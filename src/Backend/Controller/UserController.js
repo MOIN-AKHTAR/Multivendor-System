@@ -4,8 +4,18 @@ const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
 exports.SignUp = AsyncWrapper(async (req, res, next) => {
-  const User = new UserModel(req.body);
-  User.image = User.GetAvatar();
+  const { firstName, lastName, email, password } = req.body;
+  const User = new UserModel({
+    firstName,
+    lastName,
+    email,
+    password,
+    image: req.file.path
+  });
+  const Exists = await UserModel.findOne({ email });
+  if (Exists) {
+    return next(new AppError("Please Select Unique Email", 400));
+  }
   await User.save();
   if (!User) {
     return next(new AppError("Server Is Not Responding", 500));
@@ -16,19 +26,22 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
   res.status(201).send({
     Status: "Success",
     Token,
-    User
+    Id: User._id
   });
 });
 
 exports.LogIn = AsyncWrapper(async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(req.body);
   const User = await UserModel.findOne({
     email
   });
   if (!User) {
     return next(new AppError("Invalid Email Or Password", 404));
   }
+  console.log(User);
   const IsCorrectPassword = await User.MatchPassword(password, User.password);
+  console.log(IsCorrectPassword);
   if (!IsCorrectPassword) {
     return next(new AppError("Invalid Email Or Password", 404));
   }

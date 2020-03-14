@@ -1,8 +1,9 @@
 const Express = require("express");
 const UserController = require("../Controller/UserController");
+const fileUpload = require("../../FrontEnd/Shares/Middleware/UploadImage");
 const Router = Express.Router();
 
-Router.route("/Signup").post(UserController.SignUp);
+Router.route("/Signup").post(fileUpload.single("image"), UserController.SignUp);
 Router.route("/Login").post(UserController.LogIn);
 
 Router.use(UserController.Protected);
