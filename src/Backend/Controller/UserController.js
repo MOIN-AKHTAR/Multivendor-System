@@ -32,16 +32,13 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
 
 exports.LogIn = AsyncWrapper(async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body);
   const User = await UserModel.findOne({
     email
   });
   if (!User) {
     return next(new AppError("Invalid Email Or Password", 404));
   }
-  console.log(User);
   const IsCorrectPassword = await User.MatchPassword(password, User.password);
-  console.log(IsCorrectPassword);
   if (!IsCorrectPassword) {
     return next(new AppError("Invalid Email Or Password", 404));
   }

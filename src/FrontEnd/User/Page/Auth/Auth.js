@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Card from "../../../Shares/Card/Card";
 import Input from "../../../Shares/Input/Input";
 import UploadImage from "../../../Shares/UploadImage/UploadImage";
@@ -6,7 +6,9 @@ import { useFormState } from "../../../Shares/Hooks/formState";
 import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
 import Background from "../../../Shares/Background/Background";
 import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
+import { AppContext } from "../../../Shares/Context/AppContext";
 import Model from "../../../Shares/Model/Model";
+import { useHistory } from "react-router-dom";
 import "./Auth.css";
 import "../../../Shares/Button/Button.css";
 import {
@@ -15,6 +17,8 @@ import {
   VALIDATOR_REQUIRE
 } from "../../../Shares/Utils/Validators.js";
 function Auth() {
+  const ChangePath = useHistory();
+  const Auth = useContext(AppContext);
   const [isInLogInMode, setIsInLogInMode] = useState(true);
   const [state, inputHandler, SetDataHandler] = useFormState(
     {
@@ -72,7 +76,6 @@ function Auth() {
   };
   const SignupOrLogin = async e => {
     e.preventDefault();
-    console.log(state);
     if (!isInLogInMode) {
       try {
         const formData = new FormData();
@@ -84,16 +87,14 @@ function Auth() {
         const Data = await makeRequest(
           "http://localhost:5000/User/Signup",
           "POST",
-          formData,
-          {
-            "Content-Type": "multipart/form-data"
-          }
+          formData
         );
-        localStorage.setItem("User", JSON.stringify(Data));
+        Auth.logIn(Data.Id, Data.Token);
+        ChangePath.push("/");
       } catch (error) {}
     } else {
       try {
-        await makeRequest(
+        const Data = await makeRequest(
           "http://localhost:5000/User/Login",
           "POST",
           JSON.stringify({
@@ -104,6 +105,8 @@ function Auth() {
             "Content-Type": "application/json"
           }
         );
+        Auth.logIn(Data.User._id, Data.Token);
+        ChangePath.push("/");
       } catch (error) {}
     }
   };
@@ -126,6 +129,10 @@ function Auth() {
         </React.Fragment>
       )}
       <Card>
+        <h1 style={{ textAlign: "center", margin: "0.5rem" }}>
+          {" "}
+          {isInLogInMode ? "LogIn" : "SignUp"} Required
+        </h1>
         <form onSubmit={SignupOrLogin}>
           {!isInLogInMode && (
             <>
@@ -188,23 +195,3 @@ function Auth() {
 }
 
 export default Auth;
-
-// {isInLogInMode ? (
-//   <Button>{isInLogInMode?Login:Signup}</Button>
-//   <Button type={"submit"} title={"Login"} disabled={!state.isValid} />
-// ) : (
-//   <Button type={"submit"} title={"SignUp"} disabled={!state.isValid} />
-// )}
-// {isInLogInMode ? (
-//   <Button
-//     type={"button"}
-//     title={"Switch To SignUp"}
-//     switchMode={switchMode}
-//   />
-// ) : (
-//   <Button
-//     type={"button"}
-//     title={"Switch To Login"}
-//     switchMode={switchMode}
-//   />
-// )}

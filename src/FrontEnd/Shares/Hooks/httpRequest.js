@@ -8,13 +8,14 @@ export const useHttpHook = () => {
   const [errorDescripion, setErrorDescripion] = useState();
   //   This Method Will Be Used To Make Ajax Call
   const makeRequest = useCallback(
-    async (url, method = "GET", body = null, header = {}) => {
+    async (url, method = "GET", body = null, headers = {}) => {
       try {
+        console.log(url);
         setIsLoading(true);
         const JSONData = await fetch(url, {
           method,
           body,
-          header
+          headers
         });
         const Data = await JSONData.json();
         if (Data.Status === "Fail") {
