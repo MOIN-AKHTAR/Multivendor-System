@@ -1,34 +1,61 @@
 #navbar {
-  position: relative;
   background: #ff1c4a;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+#Logo_Btn__Section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#Side_Btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 100%;
+  margin: 0rem 0.5rem;
+}
+#Side_Btn:hover {
+  cursor: pointer;
+}
+#Side_Btn span {
+  display: block;
+  height: 0.2rem;
+  width: 100%;
+  margin-bottom: 0.3rem;
+  background: white;
+}
 #Logo {
-  margin: 0rem 1rem;
-  font-size: 1.5rem;
-  color: white;
-  font-weight: bolder;
+  font-size: 2rem;
+  font-weight: normal;
 }
 ul {
+  display: none;
+  margin: 1rem 0rem;
   list-style: none;
-  display: flex;
-  align-items: center;
-  margin: 1rem;
 }
 li {
-  display: inline-block;
   margin: 0rem 1rem;
 }
 .Links {
   color: white;
-  font-size: 1.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 0.5rem;
+  font-weight: bolder;
 }
 .Links:hover {
+  background: white;
+  color: black;
   text-decoration: none;
-  background: orange;
-  color: white;
-  border-radius: 10px;
+  border-radius: 5px;
+}
+@media (min-width: 40.625rem) {
+  #Side_Btn {
+    display: none;
+  }
+  ul {
+    display: flex;
+  }
 }
