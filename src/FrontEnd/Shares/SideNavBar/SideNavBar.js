@@ -13,6 +13,34 @@ function SideNavBar(props) {
           All Items
         </Link>
       </li>
+      {Auth.isLoggedIn && Auth.role === "admin" && (
+        <li>
+          <Link to="#" className="Side_Links">
+            View Vendors
+          </Link>
+        </li>
+      )}
+      {Auth.isLoggedIn && Auth.role === "vendor" && (
+        <li>
+          <Link to="#" className="Side_Links">
+            Add Item
+          </Link>
+        </li>
+      )}
+      {Auth.isLoggedIn && Auth.role === "vendor" && (
+        <li>
+          <Link to="#" className="Side_Links">
+            View Item
+          </Link>
+        </li>
+      )}
+      {Auth.isLoggedIn && Auth.role === "user" && (
+        <li>
+          <Link to="#" className="Side_Links">
+            Cart
+          </Link>
+        </li>
+      )}
       {!Auth.isLoggedIn && (
         <li>
           <Link to="/auth" className="Side_Links">

@@ -7,6 +7,7 @@ import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
 import Background from "../../../Shares/Background/Background";
 import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
 import { AppContext } from "../../../Shares/Context/AppContext";
+import SelectBar from "../../../Shares/SelectBar/SelectBar";
 import Model from "../../../Shares/Model/Model";
 import { useHistory } from "react-router-dom";
 import "./Auth.css";
@@ -48,7 +49,8 @@ function Auth() {
           ...state.inputs,
           firstName: undefined,
           lastName: undefined,
-          image: undefined
+          image: undefined,
+          role: undefined
         },
         state.inputs.email.isValid && state.inputs.password.isValid
       );
@@ -65,6 +67,10 @@ function Auth() {
             isValid: false
           },
           image: {
+            value: "",
+            isValid: false
+          },
+          role: {
             value: "",
             isValid: false
           }
@@ -84,12 +90,13 @@ function Auth() {
         formData.append("image", state.inputs.image.value);
         formData.append("email", state.inputs.email.value);
         formData.append("password", state.inputs.password.value);
+        formData.append("role", state.inputs.role.value);
         const Data = await makeRequest(
           "http://localhost:5000/User/Signup",
           "POST",
           formData
         );
-        Auth.logIn(Data.Id, Data.Token);
+        Auth.logIn(Data.Id, Data.Token, Data.Role);
         ChangePath.push("/");
       } catch (error) {}
     } else {
@@ -105,7 +112,7 @@ function Auth() {
             "Content-Type": "application/json"
           }
         );
-        Auth.logIn(Data.User._id, Data.Token);
+        Auth.logIn(Data.User._id, Data.Token, Data.User.role);
         ChangePath.push("/");
       } catch (error) {}
     }
@@ -159,6 +166,7 @@ function Auth() {
               <UploadImage onInput={inputHandler} id={"image"} />
             </>
           )}
+          {!isInLogInMode && <SelectBar onInput={inputHandler} id={"role"} />}
           <Input
             element="input"
             title="Email"

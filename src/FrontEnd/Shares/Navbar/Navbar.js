@@ -34,10 +34,38 @@ function Navbar() {
               All Items
             </Link>
           </li>
+          {Auth.isLoggedIn && Auth.role === "admin" && (
+            <li>
+              <Link to="#" className="Links">
+                View Vendors
+              </Link>
+            </li>
+          )}
           {!Auth.isLoggedIn && (
             <li>
               <Link to="/auth" className="Links">
                 Authenticate
+              </Link>
+            </li>
+          )}
+          {Auth.isLoggedIn && Auth.role === "vendor" && (
+            <li>
+              <Link to="#" className="Links">
+                Add Item
+              </Link>
+            </li>
+          )}
+          {Auth.isLoggedIn && Auth.role === "vendor" && (
+            <li>
+              <Link to="#" className="Links">
+                View Item
+              </Link>
+            </li>
+          )}
+          {Auth.isLoggedIn && Auth.role === "user" && (
+            <li>
+              <Link to="#" className="Links">
+                Cart
               </Link>
             </li>
           )}

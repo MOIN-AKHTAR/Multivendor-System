@@ -9,20 +9,23 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState();
   const [token, setToken] = useState();
-  const logIn = useCallback((Id, Token) => {
+  const [role, setRole] = useState();
+  const logIn = useCallback((Id, Token, Role) => {
     setIsLoggedIn(true);
     setLoggedInUser(Id);
     setToken(Token);
+    setRole(Role);
   }, []);
   const logOut = useCallback(() => {
     setIsLoggedIn(false);
     setLoggedInUser(null);
     setToken(null);
+    setRole(null);
   }, []);
 
   return (
     <AppContext.Provider
-      value={{ isLoggedIn, loggedInUser, token, logIn, logOut }}
+      value={{ isLoggedIn, loggedInUser, token, role, logIn, logOut }}
     >
       <Router>
         <Navbar />

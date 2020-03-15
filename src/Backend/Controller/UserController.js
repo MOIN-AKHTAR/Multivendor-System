@@ -4,11 +4,12 @@ const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
 exports.SignUp = AsyncWrapper(async (req, res, next) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, email, password, role } = req.body;
   const User = new UserModel({
     firstName,
     lastName,
     email,
+    role,
     password,
     image: req.file.path
   });
@@ -26,7 +27,8 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
   res.status(201).send({
     Status: "Success",
     Token,
-    Id: User._id
+    Id: User._id,
+    Role: User.role
   });
 });
 

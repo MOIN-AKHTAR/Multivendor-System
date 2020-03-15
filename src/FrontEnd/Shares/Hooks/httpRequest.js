@@ -10,7 +10,6 @@ export const useHttpHook = () => {
   const makeRequest = useCallback(
     async (url, method = "GET", body = null, headers = {}) => {
       try {
-        console.log(url);
         setIsLoading(true);
         const JSONData = await fetch(url, {
           method,
@@ -28,7 +27,6 @@ export const useHttpHook = () => {
         setIsError(true);
         setErrorDescripion(error.message);
         setErrorHeader("Error Occur");
-        console.log(error.message);
         throw error;
       }
     },
