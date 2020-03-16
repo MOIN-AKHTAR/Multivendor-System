@@ -3,7 +3,7 @@ import "./SelectBar.css";
 
 function SelectBar(props) {
   const { onInput, id } = props;
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState(props.Arr[0].toLowerCase());
   const SelectValue = e => {
     setRole(e.target.value);
   };
@@ -14,9 +14,11 @@ function SelectBar(props) {
     <div id="SelectNavBar">
       <span>Role</span>
       <select onChange={SelectValue}>
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-        <option value="vendor">Vendor</option>
+        {props.Arr.map((Data, Index) => (
+          <option value={Data.toLowerCase()} key={Index}>
+            {Data.toUpperCase()}
+          </option>
+        ))}
       </select>
     </div>
   );

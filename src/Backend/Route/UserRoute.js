@@ -2,7 +2,6 @@ const Express = require("express");
 const UserController = require("../Controller/UserController");
 const fileUpload = require("../../FrontEnd/Shares/Middleware/UploadImage");
 const Router = Express.Router();
-
 Router.route("/Signup").post(fileUpload.single("image"), UserController.SignUp);
 Router.route("/Login").post(UserController.LogIn);
 
@@ -14,13 +13,17 @@ Router.route("/Filter/:Id").get(UserController.FilterProduct);
 
 Router.route("/Me")
   .get(UserController.GetMe)
-  .patch(UserController.Update);
+  .patch(UserController.Update)
+  .delete(UserController.Delete);
 
 Router.route("/GetAll").get(
   UserController.RestrictTo("admin"),
   UserController.GetAll
 );
 
-Router.route("/Pay").post(UserController.Pay);
+Router.route("/Pay").post(
+  UserController.RestrictTo("user"),
+  UserController.Pay
+);
 
 module.exports = Router;

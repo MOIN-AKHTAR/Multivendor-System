@@ -29,15 +29,25 @@ function Navbar() {
           <div id="Logo">Multivendor System</div>
         </div>
         <ul>
-          <li>
-            <Link to="/" className="Links">
-              All Items
-            </Link>
-          </li>
+          {(!Auth.isLoggedIn || (Auth.isLoggedIn && Auth.role === "user")) && (
+            <li>
+              <Link to="/" className="Links">
+                All Items
+              </Link>
+            </li>
+          )}
+
           {Auth.isLoggedIn && Auth.role === "admin" && (
             <li>
               <Link to="#" className="Links">
                 View Vendors
+              </Link>
+            </li>
+          )}
+          {Auth.isLoggedIn && Auth.role === "admin" && (
+            <li>
+              <Link to="/addCategory" className="Links">
+                Add Category
               </Link>
             </li>
           )}
@@ -50,7 +60,7 @@ function Navbar() {
           )}
           {Auth.isLoggedIn && Auth.role === "vendor" && (
             <li>
-              <Link to="#" className="Links">
+              <Link to="/add" className="Links">
                 Add Item
               </Link>
             </li>

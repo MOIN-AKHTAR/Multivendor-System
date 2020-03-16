@@ -8,15 +8,24 @@ function SideNavBar(props) {
   return (
     // Here ShowSideNavBar Is A FunctionWhihc Will Be Called When Yiu Click On SideNavBar's List Item-
     <div id="Side_Nav_Bar" onClick={props.ShowSideNavBar}>
-      <li>
-        <Link to="/" className="Side_Links">
-          All Items
-        </Link>
-      </li>
+      {(!Auth.isLoggedIn || (Auth.isLoggedIn && Auth.role === "user")) && (
+        <li>
+          <Link to="/" className="Side_Links">
+            All Items
+          </Link>
+        </li>
+      )}
       {Auth.isLoggedIn && Auth.role === "admin" && (
         <li>
           <Link to="#" className="Side_Links">
             View Vendors
+          </Link>
+        </li>
+      )}
+      {Auth.isLoggedIn && Auth.role === "admin" && (
+        <li>
+          <Link to="/addCategory" className="Side_Links">
+            Add Category
           </Link>
         </li>
       )}

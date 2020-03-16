@@ -1,4 +1,5 @@
 const ProductModel = require("../Models/ProductModel");
+const CategoryModel = require("../Models/CategoryModel");
 const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
@@ -11,6 +12,10 @@ exports.AddProduct = AsyncWrapper(async (req, res, next) => {
     category
   } = req.body;
   const vendor = req.User._id;
+  const IsCategory = await CategoryModel.findById(category);
+  if (!IsCategory) {
+    return next(new AppError("This Category Doesn't Exust", 404));
+  }
   const Product = await ProductModel.create({
     name,
     description,

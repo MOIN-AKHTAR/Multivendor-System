@@ -48,7 +48,8 @@ exports.LogIn = AsyncWrapper(async (req, res, next) => {
   res.status(200).send({
     Status: "Success",
     Token,
-    User
+    Id: User._id,
+    Role: User.role
   });
 });
 
@@ -76,6 +77,19 @@ exports.Update = AsyncWrapper(async (req, res, next) => {
   });
 });
 
+exports.Delete = AsyncWrapper(async (req, res, next) => {
+  const User = await UserModel.findById(req.User._id);
+  if (!User) {
+    return next(new AppError("Couldn't Find It", 404));
+  }
+  await ProductModel.deleteMany({
+    vendor: req.User._id
+  });
+  await User.remove();
+  res.status(200).json({
+    Status: "Success"
+  });
+});
 exports.ChangePassword = AsyncWrapper(async (req, res, next) => {
   const { email = "", password = "" } = req.body;
   if (req.User.email === email) {
@@ -121,7 +135,9 @@ exports.Protected = AsyncWrapper(async (req, res, next) => {
 
 // USED TO SELECT ALL THE VENDORS
 exports.GetAll = AsyncWrapper(async (req, res, next) => {
-  const Vendors = await UserModel.find({ role: "vendor" });
+  const Vendors = await UserModel.find({ role: "vendor" }).select(
+    "-password -email -__v"
+  );
   res.status(200).json({
     Status: "Success",
     Count: Vendors.length,

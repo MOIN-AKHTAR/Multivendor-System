@@ -100,9 +100,9 @@ function Auth() {
         localStorage.setItem(
           "UserDetail",
           JSON.stringify({
-            Id: Data.User_id,
+            Id: Data.Id,
             Token: Data.Token,
-            Role: Data.User.role
+            Role: Data.Role
           })
         );
         ChangePath.push("/");
@@ -120,13 +120,13 @@ function Auth() {
             "Content-Type": "application/json"
           }
         );
-        Auth.logIn(Data.User._id, Data.Token, Data.User.role);
+        Auth.logIn(Data.Id, Data.Token, Data.Role);
         localStorage.setItem(
           "UserDetail",
           JSON.stringify({
-            Id: Data.User._id,
+            Id: Data.Id,
             Token: Data.Token,
-            Role: Data.User.role
+            Role: Data.Role
           })
         );
         ChangePath.push("/");
@@ -181,7 +181,13 @@ function Auth() {
               <UploadImage onInput={inputHandler} id={"image"} />
             </>
           )}
-          {!isInLogInMode && <SelectBar onInput={inputHandler} id={"role"} />}
+          {!isInLogInMode && (
+            <SelectBar
+              onInput={inputHandler}
+              id={"role"}
+              Arr={["User", "Vendor", "Admin"]}
+            />
+          )}
           <Input
             element="input"
             title="Email"
