@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Auth from "./FrontEnd/User/Page/Auth/Auth";
 import UserList from "./FrontEnd/User/Components/UserList/UserList";
 import Navbar from "./FrontEnd/Shares/Navbar/Navbar";
@@ -17,12 +17,18 @@ export default function App() {
     setRole(Role);
   }, []);
   const logOut = useCallback(() => {
+    localStorage.removeItem("UserDetail");
     setIsLoggedIn(false);
     setLoggedInUser(null);
     setToken(null);
     setRole(null);
   }, []);
-
+  useEffect(() => {
+    const User = JSON.parse(localStorage.getItem("UserDetail"));
+    if (User) {
+      logIn(User.Id, User.Token, User.Role);
+    }
+  }, [logIn]);
   return (
     <AppContext.Provider
       value={{ isLoggedIn, loggedInUser, token, role, logIn, logOut }}

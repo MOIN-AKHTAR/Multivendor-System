@@ -34,6 +34,13 @@ function SideNavBar(props) {
           </Link>
         </li>
       )}
+      {Auth.isLoggedIn && Auth.role === "vendor" && (
+        <li>
+          <Link to="#" className="Side_Links">
+            View Sell
+          </Link>
+        </li>
+      )}
       {Auth.isLoggedIn && Auth.role === "user" && (
         <li>
           <Link to="#" className="Side_Links">

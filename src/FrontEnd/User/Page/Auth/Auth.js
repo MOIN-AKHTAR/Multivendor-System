@@ -97,6 +97,14 @@ function Auth() {
           formData
         );
         Auth.logIn(Data.Id, Data.Token, Data.Role);
+        localStorage.setItem(
+          "UserDetail",
+          JSON.stringify({
+            Id: Data.User_id,
+            Token: Data.Token,
+            Role: Data.User.role
+          })
+        );
         ChangePath.push("/");
       } catch (error) {}
     } else {
@@ -113,6 +121,14 @@ function Auth() {
           }
         );
         Auth.logIn(Data.User._id, Data.Token, Data.User.role);
+        localStorage.setItem(
+          "UserDetail",
+          JSON.stringify({
+            Id: Data.User._id,
+            Token: Data.Token,
+            Role: Data.User.role
+          })
+        );
         ChangePath.push("/");
       } catch (error) {}
     }
@@ -137,7 +153,6 @@ function Auth() {
       )}
       <Card>
         <h1 style={{ textAlign: "center", margin: "0.5rem" }}>
-          {" "}
           {isInLogInMode ? "LogIn" : "SignUp"} Required
         </h1>
         <form onSubmit={SignupOrLogin}>
