@@ -1,0 +1,41 @@
+#Vendors_Div {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex-wrap: wrap;
+  width: 60%;
+  margin: 0 auto;
+}
+.Individual_Vendor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin: 0.3rem auto;
+  background: lightgray;
+  border-radius: 10px;
+}
+.Individual_Vendor:hover {
+  background: #333;
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+}
+.Image {
+  width: 100px;
+  height: 100px;
+}
+.Vendor_Img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.Information,
+.Vendor_Name {
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0.8rem;
+}

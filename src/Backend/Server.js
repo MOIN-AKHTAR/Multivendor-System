@@ -6,6 +6,7 @@ const ProductRoute = require("./Route/ProductRoute");
 const AddToCartRoute = require("./Route/AddToCartRoute");
 const AppError = require("./Utils/AppError");
 const ErrorMiddleWare = require("./Utils/error");
+const Path = require("path");
 
 // Resolving CORS Error
 App.use((req, res, next) => {
@@ -30,6 +31,10 @@ App.use((req, res, next) => {
 // ALLOW EXPRESS TO READ JSON
 App.use(Express.json());
 
+App.use(
+  "/src/Upload/Images",
+  Express.static(Path.join(__dirname, "..", "Upload", "Images"))
+);
 // ROUTES
 App.use("/User", UserRoute);
 App.use("/Category", CategoryRoute);

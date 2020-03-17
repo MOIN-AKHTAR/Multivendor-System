@@ -4,6 +4,7 @@ const productSchema = Schema({
   name: {
     type: String,
     required: [true, "Please Provide Name Of Product"],
+    toLower: true,
     trim: true
   },
   description: {

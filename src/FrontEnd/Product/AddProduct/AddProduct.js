@@ -90,7 +90,7 @@ function AddProduct() {
           <SelectBar
             onInput={inputHandler}
             id={"category"}
-            Arr={["Phone", "Labtop", "Food", "Service"]}
+            Arr={["5e6fd4ff4a33013a10e6013a", "Labtop", "Food", "Service"]}
           />
           <Input
             element="input"

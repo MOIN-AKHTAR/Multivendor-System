@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Auth from "./FrontEnd/User/Page/Auth/Auth";
-import UserList from "./FrontEnd/User/Components/UserList/UserList";
+import ProductList from "./FrontEnd/Product/ProductList/ProductList";
 import Navbar from "./FrontEnd/Shares/Navbar/Navbar";
+import UserList from "./FrontEnd/User/Components/UserList/UserList";
 import AddProduct from "./FrontEnd/Product/AddProduct/AddProduct";
 import AddCategory from "./FrontEnd/Category/AddCategory/AddCategory";
 import CategoryList from "./FrontEnd/Category/CategoryList/CategoryList";
@@ -42,20 +43,26 @@ export default function App() {
   if (!token) {
     element = (
       <Switch>
-        <Route path="/" exact component={UserList} />
+        <Route path="/" exact component={ProductList} />
         <Route path="/auth" component={Auth} />
         <Redirect to="/" />
       </Switch>
     );
-  } else {
+  } else if (token && role === "admin") {
     element = (
       <Switch>
         <Route path="/" exact component={UserList} />
         <Route path="/viewCategory" exact component={CategoryList} />
         <Route path="/addCategory" component={AddCategory} />
-        <Route path="/add" component={AddProduct} />
         <Route path="/updateCategory/:Id" component={UpdateCategory} />
         <Redirect to="/" />
+      </Switch>
+    );
+  } else if (token && role === "vendor") {
+    element = (
+      <Switch>
+        <Route path="/add" component={AddProduct} />
+        <Redirect to="/add" />
       </Switch>
     );
   }

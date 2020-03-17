@@ -14,7 +14,7 @@ exports.AddProduct = AsyncWrapper(async (req, res, next) => {
   const vendor = req.User._id;
   const IsCategory = await CategoryModel.findById(category);
   if (!IsCategory) {
-    return next(new AppError("This Category Doesn't Exust", 404));
+    return next(new AppError("This Category Doesn't Exist", 404));
   }
   const Product = await ProductModel.create({
     name,
