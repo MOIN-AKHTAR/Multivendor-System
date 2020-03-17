@@ -36,3 +36,30 @@ exports.GetAll = AsyncWrapper(async (req, res, next) => {
     Categories
   });
 });
+
+exports.UpdateCategory = AsyncWrapper(async (req, res, next) => {
+  const Id = req.params.Id;
+  const { name } = req.body;
+  const Category = await CategoryModel.findById(Id);
+  if (!Category) {
+    return next(new AppError("Couldn't Find This Category", 404));
+  }
+  Category.name = name;
+  await Category.save();
+  res.status(200).json({
+    Status: "Success",
+    Category
+  });
+});
+
+exports.GetSpcificCategory = AsyncWrapper(async (req, res, next) => {
+  const Id = req.params.Id;
+  const Category = await CategoryModel.findById(Id);
+  if (!Category) {
+    return next(new AppError("Couldn't Find This Category", 404));
+  }
+  res.status(200).json({
+    Status: "Success",
+    Category
+  });
+});

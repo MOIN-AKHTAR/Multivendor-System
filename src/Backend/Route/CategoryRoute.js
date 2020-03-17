@@ -8,6 +8,9 @@ const Router = Express.Router();
 Router.route("/")
   .get(CategoryController.GetAll)
   .post(CategoryController.AddCategory);
-Router.route("/:Id").delete(CategoryController.RemoveCategory);
+Router.route("/:Id")
+  .get(CategoryController.GetSpcificCategory)
+  .delete(CategoryController.RemoveCategory)
+  .patch(CategoryController.UpdateCategory);
 
 module.exports = Router;

@@ -39,7 +39,7 @@ function Navbar() {
 
           {Auth.isLoggedIn && Auth.role === "admin" && (
             <li>
-              <Link to="#" className="Links">
+              <Link to="/" className="Links">
                 View Vendors
               </Link>
             </li>
@@ -48,6 +48,13 @@ function Navbar() {
             <li>
               <Link to="/addCategory" className="Links">
                 Add Category
+              </Link>
+            </li>
+          )}
+          {Auth.isLoggedIn && Auth.role === "admin" && (
+            <li>
+              <Link to="/viewCategory" className="Links">
+                Categories
               </Link>
             </li>
           )}

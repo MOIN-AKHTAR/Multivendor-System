@@ -129,7 +129,7 @@ function Auth() {
             Role: Data.Role
           })
         );
-        ChangePath.push("/");
+        ChangePath.push("/Items");
       } catch (error) {}
     }
   };

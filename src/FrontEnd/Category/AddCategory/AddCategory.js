@@ -1,20 +1,20 @@
 import React, { useContext } from "react";
-import Card from "../Shares/Card/Card";
-import Input from "../Shares/Input/Input";
-import Background from "../Shares/Background/Background";
-import LoadingSpinner from "../Shares/Loading_Spinner/LoadingSpinner";
-import Model from "../Shares/Model/Model";
-import { useHttpHook } from "../Shares/Hooks/httpRequest";
-import { useFormState } from "../Shares/Hooks/formState";
-import { VALIDATOR_REQUIRE } from "../Shares/Utils/Validators.js";
-import { AppContext } from "../Shares/Context/AppContext";
+import Card from "../../Shares/Card/Card";
+import Input from "../../Shares/Input/Input";
+import Background from "../../Shares/Background/Background";
+import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
+import Model from "../../Shares/Model/Model";
+import { useHttpHook } from "../../Shares/Hooks/httpRequest";
+import { useFormState } from "../../Shares/Hooks/formState";
+import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js.js";
+import { AppContext } from "../../Shares/Context/AppContext";
 import { useHistory } from "react-router-dom";
 import "./AddCategory.css";
 
 function AddCategory() {
   const ChangePath = useHistory();
   const Auth = useContext(AppContext);
-  const [state, inputHandler, SetDataHandler] = useFormState(
+  const [state, inputHandler] = useFormState(
     {
       name: {
         value: "",
@@ -45,16 +45,7 @@ function AddCategory() {
           "Content-Type": "application/json"
         }
       );
-      SetDataHandler(
-        {
-          name: {
-            value: "",
-            isValid: false
-          }
-        },
-        false
-      );
-      //   ChangePath.push("")
+      ChangePath.push("/");
     } catch (error) {}
   };
   return (
