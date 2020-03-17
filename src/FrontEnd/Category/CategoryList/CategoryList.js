@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import Background from "../../Shares/Background/Background";
 import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
 import Model from "../../Shares/Model/Model";
 import CategoryItem from "../CategoryItem/CategoryItem";
+import { AppContext } from "../../../FrontEnd/Shares/Context/AppContext";
 
 function CategoryList() {
+  const Auth = useContext(AppContext);
   const [category, setCategory] = useState();
   const [
     isLoading,
@@ -17,11 +19,18 @@ function CategoryList() {
   ] = useHttpHook();
   useEffect(() => {
     const loadCategory = async () => {
-      const Data = await makeRequest("http://localhost:5000/Category/");
+      const Data = await makeRequest(
+        "http://localhost:5000/Category/",
+        "GET",
+        null,
+        {
+          Authorization: "Bearer " + Auth.token
+        }
+      );
       setCategory(Data);
     };
     loadCategory();
-  }, [makeRequest]);
+  }, [makeRequest, Auth.token]);
   return (
     <div>
       {isLoading && (

@@ -5,7 +5,7 @@ const Router = Express.Router();
 Router.route("/Signup").post(fileUpload.single("image"), UserController.SignUp);
 Router.route("/Login").post(UserController.LogIn);
 
-// Router.use(UserController.Protected);
+Router.use(UserController.Protected);
 
 Router.route("/ChangePassword").patch(UserController.ChangePassword);
 
@@ -15,9 +15,15 @@ Router.route("/Me")
   .get(UserController.GetMe)
   .patch(UserController.Update)
   .delete(UserController.Delete);
-// UserController.RestrictTo("admin"),
-Router.route("/GetAll").get(UserController.GetAll);
-//UserController.RestrictTo("user"),
-Router.route("/Pay").post(UserController.Pay);
+//
+Router.route("/GetAll").get(
+  UserController.RestrictTo("admin"),
+  UserController.GetAll
+);
+//
+Router.route("/Pay").post(
+  UserController.RestrictTo("user"),
+  UserController.Pay
+);
 
 module.exports = Router;

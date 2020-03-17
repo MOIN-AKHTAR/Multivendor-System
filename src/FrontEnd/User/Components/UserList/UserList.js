@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
 import Model from "../../../Shares/Model/Model";
 import Background from "../../../Shares/Background/Background";
 import UserItem from "../../../User/Components/UserItem/UserItem";
 import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
+import { AppContext } from "../../../Shares/Context/AppContext";
 import "./UserList.css";
 function UserList() {
+  const Auth = useContext(AppContext);
   const [
     isLoading,
     isError,
@@ -17,12 +19,16 @@ function UserList() {
   const [vendors, setVendors] = useState();
   useEffect(() => {
     const LoadVendors = async e => {
-      const Data = await makeRequest("http://localhost:5000/User/GetAll/");
+      const Data = await makeRequest(
+        "http://localhost:5000/User/GetAll/",
+        "GET",
+        null,
+        { Authorization: "Bearer " + Auth.token }
+      );
       setVendors(Data.Vendors);
-      console.log(Data);
     };
     LoadVendors();
-  }, [makeRequest]);
+  }, [makeRequest, Auth.token]);
   return (
     <React.Fragment>
       {isLoading && (

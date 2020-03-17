@@ -42,7 +42,8 @@ function AddCategory() {
           admin: Auth.loggedInUser
         }),
         {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + Auth.token
         }
       );
       ChangePath.push("/");

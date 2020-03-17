@@ -1,24 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Card from "../../Shares/Card/Card";
+import { AppContext } from "../../../FrontEnd/Shares/Context/AppContext";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import { Link } from "react-router-dom";
 import "./CategoryItem.css";
-import { UpdateCategory } from "../../../Backend/Controller/CategoryController";
 
 function CategoryItem(props) {
+  const Auth = useContext(AppContext);
   const { Categories } = props;
   const [state, setstate] = useState(Categories);
-  const [
-    isLoading,
-    isError,
-    errorHeader,
-    errorDescripion,
-    makeRequest,
-    clearError
-  ] = useHttpHook();
+  const [, , , , makeRequest] = useHttpHook();
   const DeleteCategory = async Id => {
     try {
-      await makeRequest("http://localhost:5000/Category/" + Id, "DELETE");
+      await makeRequest(
+        "http://localhost:5000/Category/" + Id,
+        "DELETE",
+        null,
+        {
+          Authorization: "Bearer " + Auth.token
+        }
+      );
 
       let FilteredCategory = state.filter(
         Cat => Cat._id.toString() !== Id.toString()

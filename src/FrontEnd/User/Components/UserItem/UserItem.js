@@ -4,7 +4,9 @@ import "./UserItem.css";
 function UserItem(props) {
   const { Vendors } = props;
   if (Vendors.length === 0) {
-    return <h1>No Vendor Yet</h1>;
+    return (
+      <h1 style={{ color: "white", textAlign: "center" }}>No Vendor Yet</h1>
+    );
   } else {
     Vendors.map(Vendor => console.log(Vendor.firstName));
     let Element = Vendors.map(Vendor => (

@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import Background from "../../Shares/Background/Background";
 import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
 import Model from "../../Shares/Model/Model";
 import Input from "../../Shares/Input/Input";
+import Card from "../../Shares/Card/Card";
+import { AppContext } from "../../Shares/Context/AppContext";
 import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js";
 import { useFormState } from "../../Shares/Hooks/formState";
 import { useParams, useHistory } from "react-router-dom";
-import Card from "../../Shares/Card/Card";
+
 import "./UpdateCategory.css";
 function UpdateCategory() {
+  const Auth = useContext(AppContext);
   const Id = useParams().Id;
   const ChangePath = useHistory();
   const [categoryToBeUpdate, setCategoryToBeUpdate] = useState();
@@ -35,7 +38,11 @@ function UpdateCategory() {
       const GetCategoryToBeUpdate = async () => {
         const Data = await makeRequest(
           `http://localhost:5000/Category/${Id}`,
-          "GET"
+          "GET",
+          null,
+          {
+            Authorization: "Bearer " + Auth.token
+          }
         );
 
         setCategoryToBeUpdate({
@@ -53,7 +60,7 @@ function UpdateCategory() {
       };
       GetCategoryToBeUpdate();
     } catch (error) {}
-  }, [makeRequest, Id, setDataHandler]);
+  }, [makeRequest, Id, setDataHandler, Auth.token]);
   const UpdateCategory = async e => {
     try {
       e.preventDefault();
@@ -62,7 +69,8 @@ function UpdateCategory() {
         "PATCH",
         JSON.stringify({ name: state.inputs.name.value }),
         {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + Auth.token
         }
       );
       ChangePath.push("/viewCategory");
