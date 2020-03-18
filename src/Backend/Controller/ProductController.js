@@ -1,5 +1,6 @@
 const ProductModel = require("../Models/ProductModel");
 const CategoryModel = require("../Models/CategoryModel");
+const UserModel = require("../Models/UserModel");
 const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
@@ -27,6 +28,9 @@ exports.AddProduct = AsyncWrapper(async (req, res, next) => {
   if (!Product) {
     return next(new AppError("Server Is Down Plz Try Again", 500));
   }
+  const User = await UserModel.findById(vendor);
+  User.items.push(category);
+  await User.save();
   res.status(201).json({
     Status: "Success",
     Product

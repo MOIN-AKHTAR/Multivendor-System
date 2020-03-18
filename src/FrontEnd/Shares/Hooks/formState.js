@@ -14,7 +14,6 @@ const Reducer = (State, Action) => {
         }
       }
       return {
-        // ...State,
         inputs: {
           ...State.inputs,
           [Action.id]: {

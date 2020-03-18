@@ -18,9 +18,17 @@ import {
   VALIDATOR_REQUIRE
 } from "../../../Shares/Utils/Validators.js";
 function Auth() {
+  // ChangePath Will Direct To New Page
   const ChangePath = useHistory();
+  // Auth Contain All Information About Currently LoggedIn User-
   const Auth = useContext(AppContext);
+  // Check whtehr User In Login/Signup Mode So That We Can Show Form Appropraitely
   const [isInLogInMode, setIsInLogInMode] = useState(true);
+  // State Will Manage All The State Of Form
+  // inputHandler Will Check Each Input Of Ecah Propety Is Valid Or Not-
+  // SetHandler Will Return New State Based On The Mode If We Are In Login Mode So It Will Return
+  // Email And Password Proerties Otherwise It Will Return Email,Password,FirstName,LastName And
+  // Image Properties So That We Can SignUp-
   const [state, inputHandler, SetDataHandler] = useFormState(
     {
       email: {
@@ -34,6 +42,12 @@ function Auth() {
     },
     false
   );
+  // useHttpHook is our custom hook which will give you are we loading while making request or get some error from request's response-
+  // isError will show do we have any error during request-
+  // errorheader and description will give you whole information on a model-
+  // Makerequest is a function which help you to make request-
+  // clearError is a function which will set isError as false inorder to close the error model
+  // isLoading will check whether AJAX request Completed Or No-
   const [
     isLoading,
     isError,
@@ -92,10 +106,12 @@ function Auth() {
         formData.append("password", state.inputs.password.value);
         formData.append("role", state.inputs.role.value);
         const Data = await makeRequest(
+          // Making Request For Signing Up
           "http://localhost:5000/User/Signup",
           "POST",
           formData
         );
+        // Preserving Info Of Currently LoggedIn User
         Auth.logIn(Data.Id, Data.Token, Data.Role);
         localStorage.setItem(
           "UserDetail",
@@ -105,11 +121,13 @@ function Auth() {
             Role: Data.Role
           })
         );
-        ChangePath.push("/");
+        // Directing to /addCategory Path-
+        ChangePath.push("/addCategory");
       } catch (error) {}
     } else {
       try {
         const Data = await makeRequest(
+          // Making Request To LogIn
           "http://localhost:5000/User/Login",
           "POST",
           JSON.stringify({
@@ -120,6 +138,7 @@ function Auth() {
             "Content-Type": "application/json"
           }
         );
+        // Preserving Info Of Currently LoggedIn User
         Auth.logIn(Data.Id, Data.Token, Data.Role);
         localStorage.setItem(
           "UserDetail",
@@ -129,6 +148,7 @@ function Auth() {
             Role: Data.Role
           })
         );
+        // Directing To /Items path
         ChangePath.push("/Items");
       } catch (error) {}
     }
@@ -185,7 +205,21 @@ function Auth() {
             <SelectBar
               onInput={inputHandler}
               id={"role"}
-              Arr={["User", "Vendor", "Admin"]}
+              Arr={[
+                {
+                  title: "User",
+                  value: "user"
+                },
+                {
+                  title: "Admin",
+                  value: "admin"
+                },
+                {
+                  title: "Vendor",
+                  value: "vendor"
+                }
+              ]}
+              title={"Role"}
             />
           )}
           <Input

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Card from "../../Shares/Card/Card";
 import Input from "../../Shares/Input/Input";
 import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
@@ -12,7 +12,16 @@ import { AppContext } from "../../../FrontEnd/Shares/Context/AppContext";
 import "./AddProduct.css";
 
 function AddProduct() {
+  // Auth Contain All Information About Currently LoggedIn User-
   const Auth = useContext(AppContext);
+  // State For Category Inorder To Fetch Category From DB And Load It Into Selection_Bar Component Of This Form
+  const [categories, setCategories] = useState([]);
+  // useHttpHook is our custom hook which will give you are we loading while making request or get some error from request's response-
+  // isError will show do we have any error during request-
+  // errorheader and description will give you whole information on a model-
+  // Makerequest is a function which help you to make request-
+  // clearError is a function which will set isError as false inorder to close the error model
+  // isLoading will check whether AJAX request Completed Or No-
   const [
     isLoading,
     isError,
@@ -21,6 +30,8 @@ function AddProduct() {
     makeRequest,
     clearError
   ] = useHttpHook();
+  // Here state Will Handle All The Data Of Form And inputHandler Will Check Whether Data Of Each
+  // Property Is Valid Or Bot-
   const [state, inputHandler] = useFormState(
     {
       name: {
@@ -38,44 +49,64 @@ function AddProduct() {
     },
     false
   );
+  useEffect(() => {
+    // Getting Category From DB
+    const loadCategory = async () => {
+      const Data = await makeRequest(
+        "http://localhost:5000/Category",
+        "GET",
+        null,
+        {
+          "Content-Type": "application/json"
+        }
+      );
+      const Arr = Data.Categories.map(Cat => ({
+        title: Cat.name,
+        value: Cat._id
+      }));
+      // Setting Category
+      setCategories(Arr);
+    };
+    loadCategory();
+  }, [makeRequest]);
   const AddItem = async e => {
     e.preventDefault();
     try {
-      const Data = await makeRequest(
+      // Making Post Request Inorder To Create Product
+      await makeRequest(
         "http://localhost:5000/Product/",
         "POST",
         JSON.stringify({
           name: state.inputs.name.value,
           price: state.inputs.price.value,
-          category: state.inputs.category.value
+          category: categories[0].value || state.inputs.category.value
         }),
         {
           "Content-Type": "application/json",
           Authorization: "Bearer " + Auth.token
         }
       );
-      console.log(Data);
     } catch (error) {}
   };
   return (
     <div id="Add_Product">
+      {isLoading && (
+        <>
+          <Background />
+          <LoadingSpinner asOverLay />
+        </>
+      )}
+      {!isLoading && isError && (
+        <>
+          <Background />
+          <Model
+            header={errorHeader}
+            description={errorDescripion}
+            closeModel={clearError}
+          />
+        </>
+      )}
       <Card>
-        {isLoading && (
-          <>
-            <Background />
-            <LoadingSpinner asOverLay />
-          </>
-        )}
-        {!isLoading && isError && (
-          <>
-            <Background />
-            <Model
-              header={errorHeader}
-              description={errorDescripion}
-              closeModel={clearError}
-            />
-          </>
-        )}
         <form onSubmit={AddItem}>
           <Input
             element="input"
@@ -90,7 +121,8 @@ function AddProduct() {
           <SelectBar
             onInput={inputHandler}
             id={"category"}
-            Arr={["5e6fd4ff4a33013a10e6013a", "Labtop", "Food", "Service"]}
+            title="Category"
+            Arr={categories}
           />
           <Input
             element="input"

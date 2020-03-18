@@ -52,10 +52,10 @@ export default function App() {
     element = (
       <Switch>
         <Route path="/" exact component={UserList} />
-        <Route path="/viewCategory" exact component={CategoryList} />
+        <Route path="/viewCategory" component={CategoryList} />
         <Route path="/addCategory" component={AddCategory} />
         <Route path="/updateCategory/:Id" component={UpdateCategory} />
-        <Redirect to="/" />
+        <Redirect to="/addCategory" />
       </Switch>
     );
   } else if (token && role === "vendor") {

@@ -12,10 +12,15 @@ import { useParams, useHistory } from "react-router-dom";
 
 import "./UpdateCategory.css";
 function UpdateCategory() {
+  // Auth Contain All Information About Currently LoggedIn User-
   const Auth = useContext(AppContext);
+  // Extracting ID Params From URL-
   const Id = useParams().Id;
+  // ChangePath will be used to direct to other pages-
   const ChangePath = useHistory();
+  // State For Category Which We Are Going To Update-
   const [categoryToBeUpdate, setCategoryToBeUpdate] = useState();
+  // It Will Handle Data For The Category To Be Update To Make Button Visible/Disable Appropriately-
   const [state, inputHandler, setDataHandler] = useFormState(
     {
       name: {
@@ -25,6 +30,12 @@ function UpdateCategory() {
     },
     false
   );
+  // useHttpHook is our custom hook which will give you are we loading while making request or get some error from request's response-
+  // isError will show do we have any error during request-
+  // errorheader and description will give you whole information on a model-
+  // Makerequest is a function which help you to make request-
+  // clearError is a function which will set isError as false inorder to close the error model
+  // isLoading will check whether AJAX request Completed Or No-
   const [
     isLoading,
     isError,
@@ -36,6 +47,7 @@ function UpdateCategory() {
   useEffect(() => {
     try {
       const GetCategoryToBeUpdate = async () => {
+        // Getting Category From DB To Be Update
         const Data = await makeRequest(
           `http://localhost:5000/Category/${Id}`,
           "GET",
@@ -44,10 +56,11 @@ function UpdateCategory() {
             Authorization: "Bearer " + Auth.token
           }
         );
-
+        // Setting CategoryToBeUpdate State
         setCategoryToBeUpdate({
           name: Data.Category.name
         });
+        // Setting Forms Data After Getting Category From DB-
         setDataHandler(
           {
             name: {
@@ -64,6 +77,7 @@ function UpdateCategory() {
   const UpdateCategory = async e => {
     try {
       e.preventDefault();
+      // Making Request To Update Category
       await makeRequest(
         `http://localhost:5000/Category/${Id}`,
         "PATCH",
@@ -73,6 +87,7 @@ function UpdateCategory() {
           Authorization: "Bearer " + Auth.token
         }
       );
+      // Directing towards the /viewCategory path-
       ChangePath.push("/viewCategory");
     } catch (error) {}
   };

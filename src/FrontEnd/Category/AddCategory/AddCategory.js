@@ -12,8 +12,11 @@ import { useHistory } from "react-router-dom";
 import "./AddCategory.css";
 
 function AddCategory() {
+  // ChangePath i'll Move To Other Page Automatically Once You Added Product-
   const ChangePath = useHistory();
+  // Auth Contain All Information About Currently LoggedIn User-
   const Auth = useContext(AppContext);
+  // Here State Will Manage The Whole Fomrs Data-
   const [state, inputHandler] = useFormState(
     {
       name: {
@@ -23,6 +26,12 @@ function AddCategory() {
     },
     false
   );
+  // useHttpHook is our custom hook which will give you are we loading while making request or get some error from request's response-
+  // isError will show do we have any error during request-
+  // errorheader and description will give you whole information on a model-
+  // Makerequest is a function which help you to make request-
+  // clearError is a function which will set isError as false inorder to close the error model
+  // isLoading will check whether AJAX request Completed Or No-
   const [
     isLoading,
     isError,
@@ -34,6 +43,7 @@ function AddCategory() {
   const AddCategory = async e => {
     e.preventDefault();
     try {
+      // Making Request To POST Category
       await makeRequest(
         "http://localhost:5000/Category/",
         "POST",

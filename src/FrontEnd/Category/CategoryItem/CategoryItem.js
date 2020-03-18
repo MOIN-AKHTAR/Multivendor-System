@@ -6,12 +6,16 @@ import { Link } from "react-router-dom";
 import "./CategoryItem.css";
 
 function CategoryItem(props) {
+  // Auth Contain All Information About Currently LoggedIn User-
   const Auth = useContext(AppContext);
+  // Destucutring
   const { Categories } = props;
   const [state, setstate] = useState(Categories);
+  // makeRequest Will be used to Make AJAX call
   const [, , , , makeRequest] = useHttpHook();
   const DeleteCategory = async Id => {
     try {
+      // Making Request To Delete Category
       await makeRequest(
         "http://localhost:5000/Category/" + Id,
         "DELETE",
@@ -20,10 +24,11 @@ function CategoryItem(props) {
           Authorization: "Bearer " + Auth.token
         }
       );
-
+      //  After Deleting Eliminating Deleted Category Inorder To Update Our Categry State To Show Correct Data-
       let FilteredCategory = state.filter(
         Cat => Cat._id.toString() !== Id.toString()
       );
+      // Setting Category After Deleting Category-
       setstate(FilteredCategory);
     } catch (error) {}
   };
