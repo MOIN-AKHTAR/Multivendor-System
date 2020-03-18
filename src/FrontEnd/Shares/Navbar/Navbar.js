@@ -74,7 +74,7 @@ function Navbar() {
           )}
           {Auth.isLoggedIn && Auth.role === "vendor" && (
             <li>
-              <Link to="#" className="Links">
+              <Link to="/viewProduct" className="Links">
                 View Item
               </Link>
             </li>
@@ -93,21 +93,7 @@ function Navbar() {
               </Link>
             </li>
           )}
-          {/* {Auth.isLoggedIn && (
-            <li>
-              <Link>
-                <img
-                  src={Auth.img}
-                  alt="no-preview"
-                  style={{
-                    display: "inline-block",
-                    width: "50px",
-                    height: "50px"
-                  }}
-                />
-              </Link>
-            </li>
-          )} */}
+
           {Auth.isLoggedIn && (
             <li>
               <Link to="#" className="Links" onClick={Auth.logOut}>

@@ -40,6 +40,7 @@ export const useFormState = (initialState, formValidation) => {
     inputs: initialState,
     isValid: formValidation
   });
+
   const inputHandler = useCallback((id, value, isValid) => {
     dispatch({
       type: "CHANGE_STATE",

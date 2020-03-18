@@ -7,6 +7,8 @@ import AddProduct from "./FrontEnd/Product/AddProduct/AddProduct";
 import AddCategory from "./FrontEnd/Category/AddCategory/AddCategory";
 import CategoryList from "./FrontEnd/Category/CategoryList/CategoryList";
 import UpdateCategory from "./FrontEnd/Category/UpdateCategory/UpdateCategory";
+import UserProduct from "./FrontEnd/User/Components/UserProduct/UserProduct";
+import UpdateProduct from "./FrontEnd/Product/UpdateProduct/UpdateProduct";
 import { AppContext } from "./FrontEnd/Shares/Context/AppContext";
 import {
   BrowserRouter as Router,
@@ -62,6 +64,8 @@ export default function App() {
     element = (
       <Switch>
         <Route path="/add" component={AddProduct} />
+        <Route path="/viewProduct" component={UserProduct} />
+        <Route path="/updateProduct/:Id" component={UpdateProduct} />
         <Redirect to="/add" />
       </Switch>
     );

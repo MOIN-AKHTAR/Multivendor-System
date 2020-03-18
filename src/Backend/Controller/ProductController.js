@@ -5,31 +5,26 @@ const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
 exports.AddProduct = AsyncWrapper(async (req, res, next) => {
-  const {
-    name,
-    description = "No Description",
-    price,
-    picture = "No Image Yet",
-    category
-  } = req.body;
+  const { name, description, price, category } = req.body;
   const vendor = req.User._id;
   const IsCategory = await CategoryModel.findById(category);
   if (!IsCategory) {
     return next(new AppError("This Category Doesn't Exist", 404));
   }
-  const Product = await ProductModel.create({
+  const Product = new ProductModel({
     name,
     description,
     price,
-    picture,
+    image: req.file.path,
     category,
     vendor
   });
+  await Product.save();
   if (!Product) {
     return next(new AppError("Server Is Down Plz Try Again", 500));
   }
   const User = await UserModel.findById(vendor);
-  User.items.push(category);
+  User.items.push(Product._id);
   await User.save();
   res.status(201).json({
     Status: "Success",
@@ -39,15 +34,18 @@ exports.AddProduct = AsyncWrapper(async (req, res, next) => {
 
 exports.RemoveProduct = AsyncWrapper(async (req, res, next) => {
   // Check whether Product exist or not
-  const Product = await ProductModel.findById(req.params.Id);
+  const Product = await ProductModel.findById(req.params.Id).populate("vendor");
   if (!Product) {
     return next(new AppError("Could Not Find This Product", 404));
   }
   // If product exist check whether the vendor who is removing is the one who created this product
-  if (Product.vendor.toString() !== req.User._id.toString()) {
+  if (Product.vendor._id.toString() !== req.User._id.toString()) {
     return next(new AppError("You Are Not Allowed", 401));
   }
   await Product.remove();
+  Product.vendor.items.pull(Product);
+  await Product.vendor.save();
+
   res.status(200).json({
     Status: "Success",
     Product
@@ -65,9 +63,12 @@ exports.UpdateProduct = AsyncWrapper(async (req, res, next) => {
   if (Product.vendor.toString() !== req.User._id.toString()) {
     return next(new AppError("You Are Not Allowed For This Action", 401));
   }
-  for (const key in req.body) {
-    Product[key] = req.body[key];
-  }
+  const { name, description, price } = req.body;
+  Product.name = name;
+  Product.description = description;
+  Product.price = price;
+  // Checking If We Have Somethig In File System-
+  Product.image = req.file ? req.file.path : Product.image;
   await Product.save();
   res.status(200).json({
     Status: "Success",
@@ -83,11 +84,19 @@ exports.DeleteAll = AsyncWrapper(async (req, res, next) => {
   });
 });
 
-exports.GetAll = AsyncWrapper(async (req, res, next) => {
+exports.GetAllByUserId = AsyncWrapper(async (req, res, next) => {
   const Product = await ProductModel.find({ vendor: req.User._id });
   res.status(200).json({
     Status: "Success",
     Count: Product.length,
+    Product
+  });
+});
+
+exports.GetProductById = AsyncWrapper(async (req, res, next) => {
+  const Product = await ProductModel.findById(req.params.Id);
+  res.status(200).json({
+    Status: "Success",
     Product
   });
 });

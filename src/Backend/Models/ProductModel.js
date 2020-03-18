@@ -19,7 +19,7 @@ const productSchema = Schema({
         throw new Error("Price Can Not Be Less Than Or Equal To Zero");
     }
   },
-  picture: {
+  image: {
     type: String,
     default: "No Image Yet"
   },

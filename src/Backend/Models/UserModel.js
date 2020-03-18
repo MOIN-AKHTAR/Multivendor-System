@@ -36,10 +36,13 @@ const userSchema = Schema({
     },
     default: "user"
   },
-  items: {
-    type: Array,
-    default: []
-  },
+  items: [
+    {
+      type: Mongoose.Types.ObjectId,
+      ref: "Product",
+      default: []
+    }
+  ],
   totalAmount: {
     type: Number,
     default: 0

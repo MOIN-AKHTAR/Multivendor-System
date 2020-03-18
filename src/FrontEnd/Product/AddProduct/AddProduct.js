@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Card from "../../Shares/Card/Card";
 import Input from "../../Shares/Input/Input";
 import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
+import UploadImage from "../../Shares/UploadImage/UploadImage";
 import Model from "../../Shares/Model/Model";
 import Background from "../../Shares/Background/Background";
 import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js";
@@ -9,9 +10,11 @@ import SelectBar from "../../Shares/SelectBar/SelectBar";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import { useFormState } from "../../Shares/Hooks/formState";
 import { AppContext } from "../../../FrontEnd/Shares/Context/AppContext";
+import { useHistory } from "react-router-dom";
 import "./AddProduct.css";
 
 function AddProduct() {
+  const ChangePath = useHistory();
   // Auth Contain All Information About Currently LoggedIn User-
   const Auth = useContext(AppContext);
   // State For Category Inorder To Fetch Category From DB And Load It Into Selection_Bar Component Of This Form
@@ -31,7 +34,7 @@ function AddProduct() {
     clearError
   ] = useHttpHook();
   // Here state Will Handle All The Data Of Form And inputHandler Will Check Whether Data Of Each
-  // Property Is Valid Or Bot-
+  // Property Is Valid Or Not-
   const [state, inputHandler] = useFormState(
     {
       name: {
@@ -43,6 +46,14 @@ function AddProduct() {
         isValid: false
       },
       price: {
+        value: "",
+        isValid: false
+      },
+      description: {
+        value: "",
+        isValid: false
+      },
+      image: {
         value: "",
         isValid: false
       }
@@ -72,20 +83,20 @@ function AddProduct() {
   const AddItem = async e => {
     e.preventDefault();
     try {
-      // Making Post Request Inorder To Create Product
-      await makeRequest(
-        "http://localhost:5000/Product/",
-        "POST",
-        JSON.stringify({
-          name: state.inputs.name.value,
-          price: state.inputs.price.value,
-          category: categories[0].value || state.inputs.category.value
-        }),
-        {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + Auth.token
-        }
+      const formData = new FormData();
+      formData.append("name", state.inputs.name.value);
+      formData.append(
+        "category",
+        categories[0].value || state.inputs.category.value
       );
+      formData.append("price", state.inputs.price.value);
+      formData.append("description", state.inputs.description.value);
+      formData.append("image", state.inputs.image.value);
+      // Making Post Request Inorder To Create Product
+      await makeRequest("http://localhost:5000/Product/", "POST", formData, {
+        Authorization: "Bearer " + Auth.token
+      });
+      ChangePath.push("/viewProduct");
     } catch (error) {}
   };
   return (
@@ -123,6 +134,17 @@ function AddProduct() {
             id={"category"}
             title="Category"
             Arr={categories}
+          />
+          <UploadImage onInput={inputHandler} id={"image"} />
+          <Input
+            element="textarea"
+            title="Product Description"
+            type="text"
+            errorMsg="Please Provide Description Of Product"
+            id="description"
+            placeholder="Enter Description Of Product"
+            validators={[VALIDATOR_REQUIRE()]}
+            onInput={inputHandler}
           />
           <Input
             element="input"

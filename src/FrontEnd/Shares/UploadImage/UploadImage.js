@@ -26,10 +26,8 @@ function UploadImage(props) {
     props.onInput(props.id, pickedImage, isValid);
   };
   useEffect(() => {
-    //   This if condition will run when first time value of image will be null
-    if (!image) {
-      return;
-    } else {
+    if (image) {
+      console.log("IMAGE", image);
       // This condition will run when you select an image form file system-
       const fileReader = new FileReader();
       //   This function will execute automatically when the blob will converted into url-
@@ -38,8 +36,14 @@ function UploadImage(props) {
       };
       //   This will start converting blob into url which can be set to img tag-
       fileReader.readAsDataURL(image);
+    } else if (props.Image) {
+      setPreviewUrl(props.Image);
     }
-  }, [image]);
+    //   This if condition will run when first time value of image will be null
+    else if (!image) {
+      return;
+    }
+  }, [image, props.Image]);
   return (
     <div className="upload_Img_Sction">
       <input
@@ -53,7 +57,7 @@ function UploadImage(props) {
       />
       <div className="img_section">
         {previewUrl ? (
-          <img src={previewUrl} alt="" />
+          <img src={previewUrl} alt="No Preview" />
         ) : (
           <p>Please Select An Image</p>
         )}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import Background from "../../Shares/Background/Background";
+import Card from "../../Shares/Card/Card";
+import Input from "../../Shares/Input/Input";
 import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
 import Model from "../../Shares/Model/Model";
-import Input from "../../Shares/Input/Input";
-import Card from "../../Shares/Card/Card";
 import { AppContext } from "../../Shares/Context/AppContext";
 import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js";
 import { useFormState } from "../../Shares/Hooks/formState";
@@ -127,7 +127,7 @@ function UpdateCategory() {
               />
               <div id="Btn_Section">
                 <button type="submit" disabled={!state.isValid}>
-                  UPDATE CATEGORY
+                  UPDATE PRODUCT
                 </button>
               </div>
             </Card>

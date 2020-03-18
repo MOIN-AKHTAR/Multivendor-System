@@ -1,7 +1,7 @@
 #Model {
   background: white;
   position: fixed;
-  z-index: 100;
+  z-index: 200;
   width: 40%;
   margin: 0px auto;
   top: 30%;
