@@ -31,7 +31,7 @@ function Navbar() {
         <ul>
           {(!Auth.isLoggedIn || (Auth.isLoggedIn && Auth.role === "user")) && (
             <li>
-              <Link to="/" className="Links">
+              <Link to="/products" className="Links">
                 All Items
               </Link>
             </li>

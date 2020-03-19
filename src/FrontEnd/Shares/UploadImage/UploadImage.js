@@ -27,7 +27,6 @@ function UploadImage(props) {
   };
   useEffect(() => {
     if (image) {
-      console.log("IMAGE", image);
       // This condition will run when you select an image form file system-
       const fileReader = new FileReader();
       //   This function will execute automatically when the blob will converted into url-

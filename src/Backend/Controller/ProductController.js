@@ -100,3 +100,14 @@ exports.GetProductById = AsyncWrapper(async (req, res, next) => {
     Product
   });
 });
+
+exports.GetAllProducts = AsyncWrapper(async (req, res, next) => {
+  const Products = await ProductModel.find({});
+  if (!Products) {
+    return next(new AppError("Something Is Going Wrong", 500));
+  }
+  return res.status(200).json({
+    Status: "Success",
+    Products
+  });
+});

@@ -5,7 +5,8 @@ const AppError = require("../Utils/AppError");
 
 exports.AddToCart = AsyncWrapper(async (req, res, next) => {
   // Check Whether The Item Buyer Want To Buy Does Exists Or Not-
-  const Product = await ProductModel.findById(req.params.Id);
+  const Id = req.params.Id;
+  const Product = await ProductModel.findById(Id);
   if (!Product) {
     return next(
       new AppError("Sorry, This Product Is Not Available Anymore", 404)
@@ -45,6 +46,7 @@ exports.AddToCart = AsyncWrapper(async (req, res, next) => {
   }
   // req.User.totalAmount =
   let Total = MakeTotal(req.User.items);
+  console.log(Total);
   // Making Total Of User Which He/She Buy Products-
   req.User.totalAmount = Total;
 

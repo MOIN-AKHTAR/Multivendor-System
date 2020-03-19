@@ -4,6 +4,8 @@ const ProductController = require("../Controller/ProductController");
 const fileUpload = require("../../FrontEnd/Shares/Middleware/UploadImage");
 const Router = Express.Router();
 
+Router.route("/getAll").get(ProductController.GetAllProducts);
+
 Router.use(UserController.Protected, UserController.RestrictTo("vendor"));
 
 Router.route("/")

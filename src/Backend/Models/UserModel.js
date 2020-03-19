@@ -38,10 +38,32 @@ const userSchema = Schema({
   },
   items: [
     {
-      type: Mongoose.Types.ObjectId,
-      ref: "Product",
-      default: []
+      product: {
+        type: Mongoose.Types.ObjectId,
+        ref: "Product"
+      },
+      vendor: {
+        type: Mongoose.Types.ObjectId,
+        ref: "User"
+      },
+      price: {
+        type: Number,
+        default: 0
+      },
+      quantity: {
+        type: Number,
+        default: 0
+      },
+      total: {
+        type: Number,
+        default: 0
+      }
     }
+    // {
+    //   type: Mongoose.Types.ObjectId,
+    //   ref: "Product",
+    //   default: []
+    // }
   ],
   totalAmount: {
     type: Number,

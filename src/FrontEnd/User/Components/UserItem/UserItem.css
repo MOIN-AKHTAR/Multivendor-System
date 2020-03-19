@@ -1,17 +1,18 @@
 #Vendors_Div {
-  display: flex;
-  flex-direction: column;
   position: relative;
-  flex-wrap: wrap;
+  display: flex;
+  flex-wrap:wrap;
+  align-content: flex-start;
   width: 60%;
   margin: 0 auto;
 }
 .Individual_Vendor {
+  flex: 1 0 calc(100% - 60%);
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  margin: 0.3rem auto;
+  margin: 0.3rem 0.5rem;
   background: lightgray;
   border-radius: 10px;
 }

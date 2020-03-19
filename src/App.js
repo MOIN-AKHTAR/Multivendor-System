@@ -45,8 +45,8 @@ export default function App() {
   if (!token) {
     element = (
       <Switch>
-        <Route path="/" exact component={ProductList} />
-        <Route path="/auth" component={Auth} />
+        <Route path="/" exact component={Auth} />
+        <Route path="/products" component={ProductList} />
         <Redirect to="/" />
       </Switch>
     );
@@ -67,6 +67,13 @@ export default function App() {
         <Route path="/viewProduct" component={UserProduct} />
         <Route path="/updateProduct/:Id" component={UpdateProduct} />
         <Redirect to="/add" />
+      </Switch>
+    );
+  } else {
+    element = (
+      <Switch>
+        <Route path="/products" component={ProductList} />
+        <Redirect to="/products" />
       </Switch>
     );
   }
