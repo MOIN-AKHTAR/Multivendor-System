@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import Background from "../../../Shares/Background/Background";
 import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
-import Model from "../../../Shares/Model/Model";
+import OptimizeHook from "../../../Shares/Hooks/OptimizeHook";
 import UserProductList from "../UserProductList/UserProductList";
 import { AppContext } from "../../../Shares/Context/AppContext";
 import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
@@ -42,21 +42,14 @@ function UserProduct() {
 
   return (
     <div>
-      {isLoading && (
-        <React.Fragment>
-          <Background />
-          <LoadingSpinner asOverlay />
-        </React.Fragment>
-      )}
-      {!isLoading && isError && (
-        <React.Fragment>
-          <Background />
-          <Model
-            header={errorHeader}
-            description={errorDescripion}
-            closeModel={clearError}
-          />
-        </React.Fragment>
+      {(isLoading || isError) && (
+        <OptimizeHook
+          isLoading={isLoading}
+          errorHeader={errorHeader}
+          errorDescripion={errorDescripion}
+          clearError={clearError}
+          isError={isError}
+        />
       )}
       {product ? (
         <UserProductList Products={product} />

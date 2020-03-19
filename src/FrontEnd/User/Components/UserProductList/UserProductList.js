@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
-import Background from "../../../Shares/Background/Background";
-import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
-import Model from "../../../Shares/Model/Model";
+import OptimizeHook from "../../../Shares/Hooks/OptimizeHook";
 import { AppContext } from "../../../Shares/Context/AppContext";
 import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
 import { Link } from "react-router-dom";
@@ -37,23 +35,15 @@ function UserProductList(props) {
       setProducts(ProductAfterDeletion);
     } catch (error) {}
   };
-  if (isLoading) {
+  if (isLoading || isError) {
     return (
-      <React.Fragment>
-        <Background />
-        <LoadingSpinner asOverlay />
-      </React.Fragment>
-    );
-  } else if (!isLoading && isError) {
-    return (
-      <React.Fragment>
-        <Background />
-        <Model
-          header={errorHeader}
-          description={errorDescripion}
-          closeModel={clearError}
-        />
-      </React.Fragment>
+      <OptimizeHook
+        isLoading={isLoading}
+        errorHeader={errorHeader}
+        errorDescripion={errorDescripion}
+        clearError={clearError}
+        isError={isError}
+      />
     );
   } else if (Products.length === 0) {
     return (

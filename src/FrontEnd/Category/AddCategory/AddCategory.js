@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import Card from "../../Shares/Card/Card";
 import Input from "../../Shares/Input/Input";
-import Background from "../../Shares/Background/Background";
-import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
-import Model from "../../Shares/Model/Model";
+import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import { useFormState } from "../../Shares/Hooks/formState";
 import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js.js";
@@ -61,21 +59,14 @@ function AddCategory() {
   };
   return (
     <div id="Add_Category">
-      {isLoading && (
-        <React.Fragment>
-          <Background />
-          <LoadingSpinner asOverlay />
-        </React.Fragment>
-      )}
-      {!isLoading && isError && (
-        <React.Fragment>
-          <Background />
-          <Model
-            header={errorHeader}
-            description={errorDescripion}
-            closeModel={clearError}
-          />
-        </React.Fragment>
+      {(isLoading || isError) && (
+        <OptimizeHook
+          isLoading={isLoading}
+          errorHeader={errorHeader}
+          errorDescripion={errorDescripion}
+          clearError={clearError}
+          isError={isError}
+        />
       )}
       <form onSubmit={AddCategory}>
         <Card>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
-import Model from "../../../Shares/Model/Model";
+import OptimizeHook from "../../../Shares/Hooks/OptimizeHook";
 import Background from "../../../Shares/Background/Background";
 import UserItem from "../../../User/Components/UserItem/UserItem";
 import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
@@ -40,21 +40,14 @@ function UserList() {
   }, [makeRequest, Auth.token]);
   return (
     <React.Fragment>
-      {isLoading && (
-        <>
-          <Background />
-          <LoadingSpinner asOverlay />
-        </>
-      )}
-      {!isLoading && isError && (
-        <>
-          <Background />
-          <Model
-            header={errorHeader}
-            description={errorDescripion}
-            closeModel={clearError}
-          />
-        </>
+      {(isLoading || isError) && (
+        <OptimizeHook
+          isLoading={isLoading}
+          errorHeader={errorHeader}
+          errorDescripion={errorDescripion}
+          clearError={clearError}
+          isError={isError}
+        />
       )}
       {vendors ? (
         <UserItem Vendors={vendors} />

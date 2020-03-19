@@ -1,10 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import Card from "../../Shares/Card/Card";
 import Input from "../../Shares/Input/Input";
-import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
 import UploadImage from "../../Shares/UploadImage/UploadImage";
-import Model from "../../Shares/Model/Model";
-import Background from "../../Shares/Background/Background";
+import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
 import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js";
 import SelectBar from "../../Shares/SelectBar/SelectBar";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
@@ -99,72 +97,68 @@ function AddProduct() {
       ChangePath.push("/viewProduct");
     } catch (error) {}
   };
-  return (
-    <div id="Add_Product">
-      {isLoading && (
-        <>
-          <Background />
-          <LoadingSpinner asOverLay />
-        </>
-      )}
-      {!isLoading && isError && (
-        <>
-          <Background />
-          <Model
-            header={errorHeader}
-            description={errorDescripion}
-            closeModel={clearError}
-          />
-        </>
-      )}
-      <Card>
-        <form onSubmit={AddItem}>
-          <Input
-            element="input"
-            title="Product Name"
-            type="text"
-            errorMsg="Please Provide Name Of Product"
-            id="name"
-            placeholder="Enter Name Of Product"
-            validators={[VALIDATOR_REQUIRE()]}
-            onInput={inputHandler}
-          />
-          <SelectBar
-            onInput={inputHandler}
-            id={"category"}
-            title="Category"
-            Arr={categories}
-          />
-          <UploadImage onInput={inputHandler} id={"image"} />
-          <Input
-            element="textarea"
-            title="Product Description"
-            type="text"
-            errorMsg="Please Provide Description Of Product"
-            id="description"
-            placeholder="Enter Description Of Product"
-            validators={[VALIDATOR_REQUIRE()]}
-            onInput={inputHandler}
-          />
-          <Input
-            element="input"
-            title="Product Price"
-            type="number"
-            errorMsg="Please Provide Price Of Product"
-            id="price"
-            placeholder="Enter Price Of Product"
-            validators={[VALIDATOR_REQUIRE()]}
-            onInput={inputHandler}
-          />
-          <div id="Btn_Section">
-            <button type="submit" disabled={!state.isValid}>
-              ADD PRODUCT
-            </button>
-          </div>
-        </form>
-      </Card>
-    </div>
-  );
+  if (isLoading || isError) {
+    return (
+      <OptimizeHook
+        isLoading={isLoading}
+        errorHeader={errorHeader}
+        errorDescripion={errorDescripion}
+        clearError={clearError}
+        isError={isError}
+      />
+    );
+  } else {
+    return (
+      <div id="Add_Product">
+        <Card>
+          <form onSubmit={AddItem}>
+            <Input
+              element="input"
+              title="Product Name"
+              type="text"
+              errorMsg="Please Provide Name Of Product"
+              id="name"
+              placeholder="Enter Name Of Product"
+              validators={[VALIDATOR_REQUIRE()]}
+              onInput={inputHandler}
+            />
+            <SelectBar
+              onInput={inputHandler}
+              id={"category"}
+              title="Category"
+              Arr={categories}
+            />
+            <UploadImage onInput={inputHandler} id={"image"} />
+            <Input
+              element="textarea"
+              title="Product Description"
+              type="text"
+              errorMsg="Please Provide Description Of Product"
+              id="description"
+              placeholder="Enter Description Of Product"
+              validators={[VALIDATOR_REQUIRE()]}
+              onInput={inputHandler}
+            />
+            <Input
+              element="input"
+              title="Product Price"
+              type="number"
+              errorMsg="Please Provide Price Of Product"
+              id="price"
+              placeholder="Enter Price Of Product"
+              validators={[VALIDATOR_REQUIRE()]}
+              onInput={inputHandler}
+            />
+            <div id="Btn_Section">
+              <button type="submit" disabled={!state.isValid}>
+                ADD PRODUCT
+              </button>
+            </div>
+          </form>
+        </Card>
+      </div>
+    );
+  }
 }
 
 export default AddProduct;

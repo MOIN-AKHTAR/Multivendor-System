@@ -3,8 +3,8 @@ import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import Background from "../../Shares/Background/Background";
 import Card from "../../Shares/Card/Card";
 import Input from "../../Shares/Input/Input";
-import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
 import Model from "../../Shares/Model/Model";
+import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
 import { AppContext } from "../../Shares/Context/AppContext";
 import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js";
 import { useFormState } from "../../Shares/Hooks/formState";
@@ -93,21 +93,14 @@ function UpdateCategory() {
   };
   return (
     <div>
-      {isLoading && (
-        <React.Fragment>
-          <Background />
-          <LoadingSpinner asOverlay />
-        </React.Fragment>
-      )}
-      {!isLoading && isError && (
-        <React.Fragment>
-          <Background />
-          <Model
-            header={errorHeader}
-            description={errorDescripion}
-            closeModel={clearError}
-          />
-        </React.Fragment>
+      {(isLoading || isError) && (
+        <OptimizeHook
+          isLoading={isLoading}
+          errorHeader={errorHeader}
+          errorDescripion={errorDescripion}
+          clearError={clearError}
+          isError={isError}
+        />
       )}
       {categoryToBeUpdate ? (
         <form onSubmit={UpdateCategory}>

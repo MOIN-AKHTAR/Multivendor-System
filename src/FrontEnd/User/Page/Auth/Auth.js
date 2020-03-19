@@ -4,11 +4,9 @@ import Input from "../../../Shares/Input/Input";
 import UploadImage from "../../../Shares/UploadImage/UploadImage";
 import { useFormState } from "../../../Shares/Hooks/formState";
 import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
-import Background from "../../../Shares/Background/Background";
-import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
 import { AppContext } from "../../../Shares/Context/AppContext";
 import SelectBar from "../../../Shares/SelectBar/SelectBar";
-import Model from "../../../Shares/Model/Model";
+import OptimizeHook from "../../..//Shares/Hooks/OptimizeHook";
 import { useHistory } from "react-router-dom";
 import "./Auth.css";
 import "../../../Shares/Button/Button.css";
@@ -155,21 +153,14 @@ function Auth() {
   };
   return (
     <div id="Auth">
-      {isLoading && (
-        <React.Fragment>
-          <Background />
-          <LoadingSpinner asOverlay />
-        </React.Fragment>
-      )}
-      {!isLoading && isError && (
-        <React.Fragment>
-          <Background />
-          <Model
-            header={errorHeader}
-            description={errorDescripion}
-            closeModel={clearError}
-          />
-        </React.Fragment>
+      {(isLoading || isError) && (
+        <OptimizeHook
+          isLoading={isLoading}
+          errorHeader={errorHeader}
+          errorDescripion={errorDescripion}
+          clearError={clearError}
+          isError={isError}
+        />
       )}
       <Card>
         <h1 style={{ textAlign: "center", margin: "0.5rem" }}>
