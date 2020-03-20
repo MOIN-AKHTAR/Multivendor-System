@@ -5,6 +5,7 @@ const fileUpload = require("../../FrontEnd/Shares/Middleware/UploadImage");
 const Router = Express.Router();
 
 Router.route("/getAll").get(ProductController.GetAllProducts);
+Router.route("/:Id").get(ProductController.GetProductById);
 
 Router.use(UserController.Protected, UserController.RestrictTo("vendor"));
 
@@ -14,7 +15,6 @@ Router.route("/")
   .delete(ProductController.DeleteAll);
 
 Router.route("/:Id")
-  .get(ProductController.GetProductById)
   .patch(fileUpload.single("image"), ProductController.UpdateProduct)
   .delete(ProductController.RemoveProduct);
 

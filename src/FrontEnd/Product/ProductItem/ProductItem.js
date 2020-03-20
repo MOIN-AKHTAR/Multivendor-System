@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
 import { AppContext } from "../../Shares/Context/AppContext";
+import { Link } from "react-router-dom";
 import "./ProductItem.css";
 
 function ProductItem(props) {
@@ -15,6 +16,7 @@ function ProductItem(props) {
     clearError
   ] = useHttpHook();
   const { products } = props;
+
   const BuyItem = async Id => {
     try {
       await makeRequest(`http://localhost:5000/Cart/${Id}`, "POST", null, {
@@ -74,7 +76,9 @@ function ProductItem(props) {
             </div>
             <div className="Product_Button_Section">
               <button onClick={() => BuyItem(Product._id)}>Buy Now</button>
-              <button>View</button>
+              <Link to={`/view/${Product._id}`} className="Btns">
+                View
+              </Link>
             </div>
           </div>
         ))}

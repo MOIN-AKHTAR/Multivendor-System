@@ -24,7 +24,12 @@
   display: flex;
   flex-direction: column-reverse;
 }
-.Product_Button_Section > button {
+.Btns {
+  border-radius: 5px;
+}
+.Product_Button_Section > button,
+.Product_Button_Section > .Btns {
+  font-size: 1rem;
   margin: 0.3rem auto;
   display: block;
   width: 80%;

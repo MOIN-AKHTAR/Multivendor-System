@@ -18,8 +18,7 @@ const HandleValidationErrorDB = error => {
   return new AppError(Message, 400);
 };
 
-const HandleInvalidTokenErroDB = _ =>
-  new AppError("Invalid Token.Please Login Again", 401);
+const HandleInvalidTokenErroDB = _ => new AppError("Please Login First", 401);
 
 const SendErrorDev = (err, res) => {
   res.status(err.statusCode).send({
