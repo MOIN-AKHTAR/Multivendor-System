@@ -29,16 +29,30 @@ function SideNavBar(props) {
           </Link>
         </li>
       )}
+      {Auth.isLoggedIn && Auth.role === "admin" && (
+        <li>
+          <Link to="/viewCategory" className="Side_Links">
+            Categories
+          </Link>
+        </li>
+      )}
+      {!Auth.isLoggedIn && (
+        <li>
+          <Link to="/auth" className="Side_Links">
+            Authenticate
+          </Link>
+        </li>
+      )}
       {Auth.isLoggedIn && Auth.role === "vendor" && (
         <li>
-          <Link to="#" className="Side_Links">
+          <Link to="/add" className="Side_Links">
             Add Item
           </Link>
         </li>
       )}
       {Auth.isLoggedIn && Auth.role === "vendor" && (
         <li>
-          <Link to="#" className="Side_Links">
+          <Link to="/viewProduct" className="Side_Links">
             View Item
           </Link>
         </li>
@@ -52,18 +66,12 @@ function SideNavBar(props) {
       )}
       {Auth.isLoggedIn && Auth.role === "user" && (
         <li>
-          <Link to="#" className="Side_Links">
-            Cart
+          <Link to="/cart" className="Side_Links">
+            MyCart
           </Link>
         </li>
       )}
-      {!Auth.isLoggedIn && (
-        <li>
-          <Link to="/auth" className="Side_Links">
-            Authenticate
-          </Link>
-        </li>
-      )}
+
       {Auth.isLoggedIn && (
         <li>
           <Link to="/auth" className="Side_Links" onClick={Auth.logOut}>

@@ -10,6 +10,7 @@ import UpdateCategory from "./FrontEnd/Category/UpdateCategory/UpdateCategory";
 import UserProduct from "./FrontEnd/User/Components/UserProduct/UserProduct";
 import UpdateProduct from "./FrontEnd/Product/UpdateProduct/UpdateProduct";
 import ViewProduct from "./FrontEnd/Product/ViewProduct/ViewProduct";
+import CartList from "./FrontEnd/Product/CartList/CartList";
 import { AppContext } from "./FrontEnd/Shares/Context/AppContext";
 import {
   BrowserRouter as Router,
@@ -75,6 +76,7 @@ export default function App() {
       <Switch>
         <Route path="/products" component={ProductList} />
         <Route path="/view/:Id" component={ViewProduct} />
+        <Route path="/cart" component={CartList} />
         <Redirect to="/products" />
       </Switch>
     );

@@ -1,4 +1,5 @@
 #navbar {
+  position: relative;
   background: #ff1c4a;
   display: flex;
   justify-content: space-between;

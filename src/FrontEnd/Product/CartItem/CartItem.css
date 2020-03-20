@@ -1,0 +1,37 @@
+#Cart_Info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  color: white;
+  width: 80%;
+  margin: 1rem auto;
+}
+#product_Total_Section {
+  background: white;
+  margin: 1rem auto;
+  color: black;
+}
+.Individual_Cart_Information {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid white;
+}
+.Product_Image_Section {
+  width: 50px;
+  height: 50px;
+}
+.product_Image_Section__img {
+  display: block;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+.product_Quantity_Information_Section,
+.product_PriceInformation_Section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

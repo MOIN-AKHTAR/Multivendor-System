@@ -13,5 +13,6 @@ Router.route("/:Id")
 Router.route("/").delete(CartController.DeleteAllFromCart);
 
 Router.route("/Specific/:Id").delete(CartController.DeleteSpecificProdcut);
+Router.route("/myCart").get(CartController.GetMyCart);
 
 module.exports = Router;

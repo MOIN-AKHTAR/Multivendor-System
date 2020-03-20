@@ -1,5 +1,6 @@
 const AddToCartModle = require("../Models/AddToCartModel");
 const ProductModel = require("../Models/ProductModel");
+const UserModel = require("../Models/UserModel");
 const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
@@ -44,12 +45,10 @@ exports.AddToCart = AsyncWrapper(async (req, res, next) => {
     };
     req.User.items.splice(Index, 1, AddedItem);
   }
-  // req.User.totalAmount =
+
   let Total = MakeTotal(req.User.items);
-  console.log(Total);
   // Making Total Of User Which He/She Buy Products-
   req.User.totalAmount = Total;
-
   // Updating User
   await req.User.save();
   if (!req.User) {
@@ -78,11 +77,11 @@ exports.DeleteAllFromCart = AsyncWrapper(async (req, res, next) => {
   });
 });
 
-// It will only delete some amount of specific product such as deleting 1 quantity of product A who's quantity is 3-
+// It will only delete some amount of specific product such as deleting 1 quantity of product-
 exports.DeleteFromCart = AsyncWrapper(async (req, res, next) => {
   // Check Whether The Item Buyer Want To Buy Does Exists Or Not-
   const Index = req.User.items.findIndex(
-    Item => Item.product.toString() === req.params.Id.toString()
+    Item => Item._id.toString() === req.params.Id.toString()
   );
   if (Index < 0) {
     return next(
@@ -116,8 +115,10 @@ exports.DeleteFromCart = AsyncWrapper(async (req, res, next) => {
 // This method will Completely Delete Specific Product From Items Array
 exports.DeleteSpecificProdcut = AsyncWrapper(async (req, res, next) => {
   // Check Whether The Item Buyer Want To Buy Does Exists Or Not-
+  const Id = req.params.Id.toString();
+  // Checking The Index That Which Product We Are Trying To Delete Is Present In Our Cart Items Or Not-
   const Index = req.User.items.findIndex(
-    Item => Item.product.toString() === req.params.Id.toString()
+    Item => Item.product.toString() === Id
   );
   if (Index < 0) {
     return next(
@@ -133,6 +134,15 @@ exports.DeleteSpecificProdcut = AsyncWrapper(async (req, res, next) => {
   res.status(200).json({
     Status: "Success",
     Message: "Deleted Item From Cart"
+  });
+});
+
+// This Method Will Provide You The Whole Cart Of LoggedIn User-
+exports.GetMyCart = AsyncWrapper(async (req, res, next) => {
+  const Cart = await UserModel.findById(req.User._id).populate("items.product");
+  return res.status(200).json({
+    Status: "Success",
+    Cart
   });
 });
 

@@ -88,8 +88,8 @@ function Navbar() {
           )}
           {Auth.isLoggedIn && Auth.role === "user" && (
             <li>
-              <Link to="#" className="Links">
-                Cart
+              <Link to="/cart" className="Links">
+                MyCart
               </Link>
             </li>
           )}
