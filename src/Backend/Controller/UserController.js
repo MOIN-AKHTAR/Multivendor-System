@@ -198,7 +198,9 @@ exports.Pay = AsyncWrapper(async (req, res, next) => {
 
   // Executing All The Pending Promises-
   await Promise.all(promise);
-
+  // Once Bill Paid  Then We Have To Empty The Items
+  req.User.items = [];
+  await req.User.save();
   res.status(200).json({
     Status: "Success",
     Count: Data.length,

@@ -68,7 +68,7 @@ function ViewProduct() {
             alt="No Preview"
           />
         </div>
-        <div id="Product_Info">
+        <div className="Product_Description">
           <h3>{product.name}</h3>
           <h4>{product.description}</h4>
           <h5>RS.{product.price}$</h5>

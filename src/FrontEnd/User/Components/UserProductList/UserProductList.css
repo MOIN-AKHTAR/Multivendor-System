@@ -1,4 +1,5 @@
 #My_Products {
+  position: relative;
   text-align: center;
   background: white;
   width: 80%;
@@ -20,11 +21,22 @@
   width: 100%;
   height: 100%;
 }
+.Product_Description {
+  width: 80%;
+  text-transform: capitalize;
+  margin: 0rem auto;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: break-word;
+}
+
 .Product_Btn_Section {
   display: flex;
   flex-direction: column;
   width: 50%;
-  margin: 2rem auto;
+  margin: 0.5rem auto;
 }
 
 .Btns {

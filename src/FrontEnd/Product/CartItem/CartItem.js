@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import { AppContext } from "../../Shares/Context/AppContext";
 import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
+import { Link } from "react-router-dom";
 import "./CartItem.css";
 
 function CartItem(props) {
@@ -33,6 +34,11 @@ function CartItem(props) {
       }
     );
     setMyCart(Data.Cart);
+  };
+  const PayBill = async () => {
+    await makeRequest("http://localhost:5000/User/Pay", "POST", null, {
+      Authorization: "Bearer " + Auth.token
+    });
   };
   const RemoveFromCart = async Id => {
     //   Removing Item From Cart
@@ -90,7 +96,10 @@ function CartItem(props) {
     return (
       <div id="Cart_Info">
         <div id="product_Total_Section">
-          <h1>{myCart.totalAmount}</h1>
+          <h1>Total {myCart.totalAmount}</h1>
+          <Link to="/products" onClick={PayBill} className="Btns">
+            Pay Bill
+          </Link>
         </div>
         <div id="Cart">
           {myCart.items.map(Product => (

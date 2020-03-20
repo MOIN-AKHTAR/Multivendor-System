@@ -63,9 +63,11 @@ function UserProductList(props) {
                 alt="No Preview"
               />
             </div>
-            <p>{Product.name}</p>
-            <p>{Product.description}</p>
-            <p>{Product.price}</p>
+            <div className="Product_Description">
+              <h3>{Product.name}</h3>
+              <p>{Product.description}</p>
+              <h4>RS: {Product.price}$</h4>
+            </div>
             <div className="Product_Btn_Section">
               <Link to={`/updateProduct/${Product._id}`} className="Btns">
                 Update

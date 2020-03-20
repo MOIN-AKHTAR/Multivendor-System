@@ -9,9 +9,15 @@
   margin: 1rem auto;
 }
 #product_Total_Section {
-  background: white;
-  margin: 1rem auto;
-  color: black;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#product_Total_Section > .Btns {
+  display: inline-block;
+  width: auto;
+  margin: 0.5rem 0rem;
+  padding: 0.5rem 1rem;
 }
 .Individual_Cart_Information {
   display: flex;
