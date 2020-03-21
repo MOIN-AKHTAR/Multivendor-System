@@ -141,7 +141,7 @@ function UpdateUser() {
               validators={[VALIDATOR_REQUIRE()]}
               onInput={inputHandler}
             />
-            <div id="Btn_Section" id="Update_Btn__Section">
+            <div id="Btn_Section" className="Update_Btn__Section">
               <Link to="/email" className="Btns Update_User_Btn">
                 Change Email
               </Link>

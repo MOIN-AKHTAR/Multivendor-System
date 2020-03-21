@@ -112,14 +112,14 @@ function Auth() {
         console.log(Data);
         // Preserving Info Of Currently LoggedIn User
         Auth.logIn(Data.Id, Data.Token, Data.Role);
-        localStorage.setItem(
-          "UserDetail",
-          JSON.stringify({
-            Id: Data.Id,
-            Token: Data.Token,
-            Role: Data.Role
-          })
-        );
+        // localStorage.setItem(
+        //   "UserDetail",
+        //   JSON.stringify({
+        //     Id: Data.Id,
+        //     Token: Data.Token,
+        //     Role: Data.Role
+        //   })
+        // );
         // Directing to /addCategory Path-
         ChangePath.push("/addCategory");
       } catch (error) {}
@@ -139,15 +139,15 @@ function Auth() {
         );
         // Preserving Info Of Currently LoggedIn User
         Auth.logIn(Data.Id, Data.Token, Data.Role, Data.Image);
-        localStorage.setItem(
-          "UserDetail",
-          JSON.stringify({
-            Id: Data.Id,
-            Token: Data.Token,
-            Role: Data.Role,
-            Image: Data.Image
-          })
-        );
+        // localStorage.setItem(
+        //   "UserDetail",
+        //   JSON.stringify({
+        //     Id: Data.Id,
+        //     Token: Data.Token,
+        //     Role: Data.Role,
+        //     Image: Data.Image
+        //   })
+        // );
         // Directing To /Items path
         ChangePath.push("/Items");
       } catch (error) {}

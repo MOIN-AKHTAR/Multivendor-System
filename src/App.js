@@ -22,18 +22,33 @@ import {
   Redirect
 } from "react-router-dom";
 
+let logOutId;
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState();
   const [token, setToken] = useState();
   const [role, setRole] = useState();
   const [image, setImage] = useState();
-  const logIn = useCallback((Id, Token, Role, Image) => {
+  const [expirationDate, setExpirationDate] = useState();
+  const logIn = useCallback((Id, Token, Role, Image, expirationTime) => {
+    // Setting Time To Expire
+    let ExpireToken = expirationTime || new Date(new Date().getTime() + 10000);
+    setExpirationDate(ExpireToken);
     setIsLoggedIn(true);
     setLoggedInUser(Id);
     setToken(Token);
     setRole(Role);
     setImage(Image);
+    localStorage.setItem(
+      "UserDetail",
+      JSON.stringify({
+        Id: Id,
+        Token: Token,
+        Role: Role,
+        Image: "http://localhost:5000/" + Image,
+        Expiration: ExpireToken.toISOString()
+      })
+    );
   }, []);
   const logOut = useCallback(() => {
     localStorage.removeItem("UserDetail");
@@ -42,13 +57,32 @@ export default function App() {
     setToken(null);
     setRole(null);
     setImage(null);
+    setExpirationDate(null);
   }, []);
   useEffect(() => {
     const User = JSON.parse(localStorage.getItem("UserDetail"));
-    if (User) {
-      logIn(User.Id, User.Token, User.Role, User.Image);
+    if (User && User.Token && new Date(User.Expiration) > new Date()) {
+      logIn(
+        User.Id,
+        User.Token,
+        User.Role,
+        User.Image,
+        new Date(User.Expiration)
+      );
     }
   }, [logIn]);
+
+  useEffect(() => {
+    if (token && expirationDate) {
+      const remainingTime = expirationDate.getTime() - new Date().getTime();
+      // Regstering Timer For Token To Be Expire
+      logOutId = setTimeout(logOut, remainingTime);
+    } else {
+      // Once Our token Variable Become null via logOut function we will clearTimer which we set For Token Expiration-
+      clearTimeout(logOutId);
+    }
+  }, [expirationDate, logOut, token]);
+
   let element;
   if (!token) {
     element = (

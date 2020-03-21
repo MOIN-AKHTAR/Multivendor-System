@@ -75,7 +75,8 @@ const userSchema = Schema({
 userSchema.methods.MatchPassword = async (Password, UserPassword) =>
   Bcrypt.compare(Password, UserPassword);
 
-userSchema.methods.GenerateToken = Id => Jwt.sign({ Id }, "ISLAM IS LOVE");
+userSchema.methods.GenerateToken = Id =>
+  Jwt.sign({ Id }, "ISLAM IS LOVE", { expiresIn: "1h" });
 
 userSchema.statics.VerifyToken = Token => Jwt.verify(Token, "ISLAM IS LOVE");
 

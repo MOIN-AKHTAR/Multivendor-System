@@ -3,7 +3,7 @@
   width: 70%;
   margin: 2rem auto;
 }
-#Update_Btn__Section {
+.Update_Btn__Section {
   display: flex;
   justify-content: space-evenly;
   width: 70%;
