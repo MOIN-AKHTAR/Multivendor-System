@@ -27,17 +27,19 @@ function CategoryList() {
   ] = useHttpHook();
   useEffect(() => {
     const loadCategory = async () => {
-      // Making AJAX Call to GET All Categories
-      const Data = await makeRequest(
-        "http://localhost:5000/Category/",
-        "GET",
-        null,
-        {
-          Authorization: "Bearer " + Auth.token
-        }
-      );
-      // Setting Our Category State-
-      setCategory(Data);
+      try {
+        // Making AJAX Call to GET All Categories
+        const Data = await makeRequest(
+          "http://localhost:5000/Category/",
+          "GET",
+          null,
+          {
+            Authorization: "Bearer " + Auth.token
+          }
+        );
+        // Setting Our Category State-
+        setCategory(Data);
+      } catch (error) {}
     };
     loadCategory();
   }, [makeRequest, Auth.token]);

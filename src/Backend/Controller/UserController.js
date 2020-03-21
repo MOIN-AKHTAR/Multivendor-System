@@ -28,7 +28,8 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
     Status: "Success",
     Token,
     Id: User._id,
-    Role: User.role
+    Role: User.role,
+    Image: User.image
   });
 });
 
@@ -49,7 +50,8 @@ exports.LogIn = AsyncWrapper(async (req, res, next) => {
     Status: "Success",
     Token,
     Id: User._id,
-    Role: User.role
+    Role: User.role,
+    Image: User.image
   });
 });
 
@@ -61,15 +63,9 @@ exports.GetMe = AsyncWrapper(async (req, res, next) => {
 });
 
 exports.Update = AsyncWrapper(async (req, res, next) => {
-  const ShallowBody = { ...req.body };
-  const NotAllowedKeys = ["password"];
-  NotAllowedKeys.forEach(Item => delete ShallowBody[Item]);
-  for (Keys in ShallowBody) {
-    req.User[Keys] = ShallowBody[Keys];
-  }
-  if (ShallowBody.email) {
-    req.User.image = req.User.GetAvatar();
-  }
+  const { firstName, lastName } = req.body;
+  req.User.firstName = firstName;
+  req.User.lastName = lastName;
   await req.User.save();
   res.status(200).json({
     Status: "Success",
@@ -90,14 +86,28 @@ exports.Delete = AsyncWrapper(async (req, res, next) => {
     Status: "Success"
   });
 });
+exports.ChangeEmail = AsyncWrapper(async (req, res, next) => {
+  const { email, new_email } = req.body;
+  if (req.User.email !== email) {
+    return next(new AppError("You Are Not Authorized For This Action", 401));
+  }
+  const User = await UserModel.findOne({ email: new_email });
+  if (User) {
+    return next(new AppError("Please Use Any Other Email", 400));
+  }
+  req.User.email = new_email;
+  await req.User.save();
+  return res.status(200).json({
+    Status: "Success"
+  });
+});
 exports.ChangePassword = AsyncWrapper(async (req, res, next) => {
   const { email = "", password = "" } = req.body;
   if (req.User.email === email) {
     req.User.password = password;
     await req.User.save();
     return res.status(200).send({
-      Status: "Success",
-      User: req.User
+      Status: "Success"
     });
   } else {
     return next(new AppError("You Are Not Allowed To Take This Action", 401));
@@ -125,12 +135,6 @@ exports.Protected = AsyncWrapper(async (req, res, next) => {
   // Grant Access To Other Routes-
   req.User = user;
   next();
-
-  // 4) Check if the user changed password after the token issued
-  // const Ischanged = user.PasswordChanged(Decoder.iat);
-  // if (Ischanged) {
-  //   return next(new AppError("Password Changed.Please Login Again", 401));
-  // }
 });
 
 // USED TO SELECT ALL THE VENDORS
@@ -173,7 +177,8 @@ exports.FilterProduct = AsyncWrapper(async (req, res, next) => {
 exports.Pay = AsyncWrapper(async (req, res, next) => {
   const Data = [];
 
-  // Removing Redundency And Optimizing Query By Accumalating Data Related To Single Vendor Into Single Object
+  // Removing Redundency And Optimizing Query By Accumalating Data Related To Single Vendor
+  //Into Single Object
   req.User.items.forEach(Item => {
     const ItemFound = Data.find(
       Vendor => Item.vendor.toString() === Vendor.vendor.toString()

@@ -5,6 +5,7 @@ export const AppContext = createContext({
   loggedInUser: null,
   token: null,
   role: null,
+  image: null,
   logIn: () => {},
   logOut: () => {}
 });

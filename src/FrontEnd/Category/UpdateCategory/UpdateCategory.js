@@ -3,7 +3,7 @@ import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import Background from "../../Shares/Background/Background";
 import Card from "../../Shares/Card/Card";
 import Input from "../../Shares/Input/Input";
-import Model from "../../Shares/Model/Model";
+import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
 import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
 import { AppContext } from "../../Shares/Context/AppContext";
 import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js";
@@ -129,7 +129,7 @@ function UpdateCategory() {
       ) : (
         <>
           <Background />
-          <Model asOverlay />
+          <LoadingSpinner asOverlay />
         </>
       )}
     </div>

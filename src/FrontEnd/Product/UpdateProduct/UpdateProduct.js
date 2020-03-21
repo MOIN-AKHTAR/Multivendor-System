@@ -76,39 +76,41 @@ function UpdateProduct() {
     } catch (error) {}
   };
   useEffect(() => {
-    const LoadProduct = async () => {
-      const Data = await makeRequest(
-        "http://localhost:5000/Product/" + Id,
-        "GET",
-        null,
-        {
-          Authorization: "Bearer " + Auth.token
-        }
-      );
-      setProductToBeUpdate(Data.Product);
-      SetDataHandler(
-        {
-          name: {
-            value: Data.Product.name,
-            isValid: true
-          },
-          description: {
-            value: Data.Product.description,
-            isValid: true
-          },
-          price: {
-            value: Data.Product.price,
-            isValid: true
-          },
-          image: {
-            value: Data.Product.image,
-            isValid: true
+    try {
+      const LoadProduct = async () => {
+        const Data = await makeRequest(
+          "http://localhost:5000/Product/" + Id,
+          "GET",
+          null,
+          {
+            Authorization: "Bearer " + Auth.token
           }
-        },
-        true
-      );
-    };
-    LoadProduct();
+        );
+        setProductToBeUpdate(Data.Product);
+        SetDataHandler(
+          {
+            name: {
+              value: Data.Product.name,
+              isValid: true
+            },
+            description: {
+              value: Data.Product.description,
+              isValid: true
+            },
+            price: {
+              value: Data.Product.price,
+              isValid: true
+            },
+            image: {
+              value: Data.Product.image,
+              isValid: true
+            }
+          },
+          true
+        );
+      };
+      LoadProduct();
+    } catch (error) {}
   }, [Id, Auth.token, makeRequest, SetDataHandler]);
   if (isLoading || isError) {
     return (

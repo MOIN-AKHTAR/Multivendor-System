@@ -80,7 +80,7 @@ function AddCategory() {
             validators={[VALIDATOR_REQUIRE()]}
             onInput={inputHandler}
           />
-          <div id="Btn_Section">
+          <div id="Btn_Section" className="Add_Category__Btn___Section">
             <button type="submit" disabled={!state.isValid}>
               ADD CATEGORY
             </button>

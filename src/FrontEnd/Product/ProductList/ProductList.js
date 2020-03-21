@@ -16,11 +16,13 @@ function ProductList() {
     clearError
   ] = useHttpHook();
   useEffect(() => {
-    const LoadData = async () => {
-      const Data = await makeRequest("http://localhost:5000/Product/getAll/");
-      setProducts(Data.Products);
-    };
-    LoadData();
+    try {
+      const LoadData = async () => {
+        const Data = await makeRequest("http://localhost:5000/Product/getAll/");
+        setProducts(Data.Products);
+      };
+      LoadData();
+    } catch (error) {}
   }, [makeRequest]);
   if (isLoading || isError) {
     return (

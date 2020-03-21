@@ -8,7 +8,7 @@ Router.route("/Login").post(UserController.LogIn);
 Router.use(UserController.Protected);
 
 Router.route("/ChangePassword").patch(UserController.ChangePassword);
-
+Router.route("/ChangeEmail").patch(UserController.ChangeEmail);
 Router.route("/Filter/:Id").get(UserController.FilterProduct);
 
 Router.route("/Me")

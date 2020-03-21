@@ -35,18 +35,20 @@ function ViewProduct() {
   };
 
   useEffect(() => {
-    const LoadData = async () => {
-      const Data = await makeRequest(
-        "http://localhost:5000/Product/" + Id,
-        "GET",
-        null,
-        {
-          Authorization: "Bearer " + Auth.token
-        }
-      );
-      setProduct(Data.Product);
-    };
-    LoadData();
+    try {
+      const LoadData = async () => {
+        const Data = await makeRequest(
+          "http://localhost:5000/Product/" + Id,
+          "GET",
+          null,
+          {
+            Authorization: "Bearer " + Auth.token
+          }
+        );
+        setProduct(Data.Product);
+      };
+      LoadData();
+    } catch (error) {}
   }, [makeRequest, Auth.token, Id]);
 
   if (isLoading || isError) {

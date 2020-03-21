@@ -26,17 +26,19 @@ function UserList() {
   // State For Vendors
   const [vendors, setVendors] = useState();
   useEffect(() => {
-    const LoadVendors = async e => {
-      const Data = await makeRequest(
-        // Loading All The Vendors Form DB
-        "http://localhost:5000/User/GetAll/",
-        "GET",
-        null,
-        { Authorization: "Bearer " + Auth.token }
-      );
-      setVendors(Data.Vendors);
-    };
-    LoadVendors();
+    try {
+      const LoadVendors = async e => {
+        const Data = await makeRequest(
+          // Loading All The Vendors Form DB
+          "http://localhost:5000/User/GetAll/",
+          "GET",
+          null,
+          { Authorization: "Bearer " + Auth.token }
+        );
+        setVendors(Data.Vendors);
+      };
+      LoadVendors();
+    } catch (error) {}
   }, [makeRequest, Auth.token]);
   return (
     <React.Fragment>

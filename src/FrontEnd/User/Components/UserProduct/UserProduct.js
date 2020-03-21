@@ -26,18 +26,20 @@ function UserProduct() {
     clearError
   ] = useHttpHook();
   useEffect(() => {
-    const loadProducts = async () => {
-      const Data = await makeRequest(
-        "http://localhost:5000/Product/",
-        "GET",
-        null,
-        {
-          Authorization: "Bearer " + Auth.token
-        }
-      );
-      setProduct(Data.Product);
-    };
-    loadProducts();
+    try {
+      const loadProducts = async () => {
+        const Data = await makeRequest(
+          "http://localhost:5000/Product/",
+          "GET",
+          null,
+          {
+            Authorization: "Bearer " + Auth.token
+          }
+        );
+        setProduct(Data.Product);
+      };
+      loadProducts();
+    } catch (error) {}
   }, [makeRequest, Auth.token]);
 
   return (

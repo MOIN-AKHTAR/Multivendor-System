@@ -24,51 +24,61 @@ function CartItem(props) {
   const { Carts } = props;
   const [myCart, setMyCart] = useState(Carts);
   const LoadData = async () => {
-    const Data = await makeRequest(
-      "http://localhost:5000/Cart/myCart",
-      "GET",
-      null,
-      {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + Auth.token
-      }
-    );
-    setMyCart(Data.Cart);
+    try {
+      const Data = await makeRequest(
+        "http://localhost:5000/Cart/myCart",
+        "GET",
+        null,
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + Auth.token
+        }
+      );
+      setMyCart(Data.Cart);
+    } catch (error) {}
   };
   const PayBill = async () => {
-    await makeRequest("http://localhost:5000/User/Pay", "POST", null, {
-      Authorization: "Bearer " + Auth.token
-    });
+    try {
+      await makeRequest("http://localhost:5000/User/Pay", "POST", null, {
+        Authorization: "Bearer " + Auth.token
+      });
+    } catch (error) {}
   };
   const RemoveFromCart = async Id => {
-    //   Removing Item From Cart
-    await makeRequest("http://localhost:5000/Cart/" + Id, "DELETE", null, {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + Auth.token
-    });
-    // Loading Fresh Data After Item Deleted From Cart
-    await LoadData();
-  };
-  const AddToCart = async Id => {
-    //   Removing Item From Cart
-    await makeRequest("http://localhost:5000/Cart/" + Id, "POST", null, {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + Auth.token
-    });
-    // Loading Fresh Data After Item Deleted From Cart
-    await LoadData();
-  };
-  const DeletFromCart = async Id => {
-    await makeRequest(
-      "http://localhost:5000/Cart/Specific/" + Id,
-      "DELETE",
-      null,
-      {
+    try {
+      //   Removing Item From Cart
+      await makeRequest("http://localhost:5000/Cart/" + Id, "DELETE", null, {
         "Content-Type": "application/json",
         Authorization: "Bearer " + Auth.token
-      }
-    );
-    await LoadData();
+      });
+      // Loading Fresh Data After Item Deleted From Cart
+      await LoadData();
+    } catch (error) {}
+  };
+  const AddToCart = async Id => {
+    try {
+      //   Removing Item From Cart
+      await makeRequest("http://localhost:5000/Cart/" + Id, "POST", null, {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + Auth.token
+      });
+      // Loading Fresh Data After Item Deleted From Cart
+      await LoadData();
+    } catch (error) {}
+  };
+  const DeletFromCart = async Id => {
+    try {
+      await makeRequest(
+        "http://localhost:5000/Cart/Specific/" + Id,
+        "DELETE",
+        null,
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + Auth.token
+        }
+      );
+      await LoadData();
+    } catch (error) {}
   };
   if (myCart.items.length === 0) {
     return (

@@ -101,6 +101,17 @@ function Navbar() {
               </Link>
             </li>
           )}
+          {Auth.isLoggedIn && (
+            <li>
+              <Link to="/getMe" className="Links image_Link">
+                <img
+                  src={"http://localhost:5000/" + Auth.image}
+                  alt="No Preview"
+                  style={{ width: "2rem", height: "2rem", borderRadius: "50%" }}
+                />
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>

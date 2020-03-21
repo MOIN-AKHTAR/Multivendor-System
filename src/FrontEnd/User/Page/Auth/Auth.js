@@ -109,6 +109,7 @@ function Auth() {
           "POST",
           formData
         );
+        console.log(Data);
         // Preserving Info Of Currently LoggedIn User
         Auth.logIn(Data.Id, Data.Token, Data.Role);
         localStorage.setItem(
@@ -137,13 +138,14 @@ function Auth() {
           }
         );
         // Preserving Info Of Currently LoggedIn User
-        Auth.logIn(Data.Id, Data.Token, Data.Role);
+        Auth.logIn(Data.Id, Data.Token, Data.Role, Data.Image);
         localStorage.setItem(
           "UserDetail",
           JSON.stringify({
             Id: Data.Id,
             Token: Data.Token,
-            Role: Data.Role
+            Role: Data.Role,
+            Image: Data.Image
           })
         );
         // Directing To /Items path

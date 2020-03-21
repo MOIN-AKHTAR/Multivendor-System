@@ -1,0 +1,18 @@
+#UpdateName {
+  position: relative;
+  width: 70%;
+  margin: 2rem auto;
+}
+#Update_Btn__Section {
+  display: flex;
+  justify-content: space-evenly;
+  width: 70%;
+  margin: 1rem auto;
+}
+
+.Update_User_Btn {
+  border-radius: 10px;
+  display: block;
+  width: auto;
+  margin: 0rem;
+}

@@ -59,24 +59,26 @@ function AddProduct() {
     false
   );
   useEffect(() => {
-    // Getting Category From DB
-    const loadCategory = async () => {
-      const Data = await makeRequest(
-        "http://localhost:5000/Category",
-        "GET",
-        null,
-        {
-          "Content-Type": "application/json"
-        }
-      );
-      const Arr = Data.Categories.map(Cat => ({
-        title: Cat.name,
-        value: Cat._id
-      }));
-      // Setting Category
-      setCategories(Arr);
-    };
-    loadCategory();
+    try {
+      // Getting Category From DB
+      const loadCategory = async () => {
+        const Data = await makeRequest(
+          "http://localhost:5000/Category",
+          "GET",
+          null,
+          {
+            "Content-Type": "application/json"
+          }
+        );
+        const Arr = Data.Categories.map(Cat => ({
+          title: Cat.name,
+          value: Cat._id
+        }));
+        // Setting Category
+        setCategories(Arr);
+      };
+      loadCategory();
+    } catch (error) {}
   }, [makeRequest]);
   const AddItem = async e => {
     e.preventDefault();
