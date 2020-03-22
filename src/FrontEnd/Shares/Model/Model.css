@@ -39,3 +39,9 @@ button:focus {
   display: flex;
   flex-direction: row-reverse;
 }
+
+@media (max-width: 40.725rem) {
+  #Model {
+    width: 70%;
+  }
+}

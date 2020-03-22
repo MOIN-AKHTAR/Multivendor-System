@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { useFormState } from "../../../Shares/Hooks/formState";
-import Card from "../../../Shares/Card/Card";
-import Input from "../../../Shares/Input/Input";
-import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
-import { AppContext } from "../../../Shares/Context/AppContext";
-import OptimizeHook from "../../..//Shares/Hooks/OptimizeHook";
+import { useFormState } from "../../Shares/Hooks/formState";
+import Card from "../../Shares/Card/Card";
+import Input from "../../Shares/Input/Input";
+import { useHttpHook } from "../../Shares/Hooks/httpRequest";
+import { AppContext } from "../../Shares/Context/AppContext";
+import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL
-} from "../../../Shares/Utils/Validators.js";
+} from "../../Shares/Utils/Validators.js";
 import { useHistory } from "react-router-dom";
 import "./ChangePassword.css";
 function ChangePassword() {

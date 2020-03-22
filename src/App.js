@@ -1,20 +1,20 @@
 import React, { useState, useCallback, useEffect } from "react";
-import Auth from "./FrontEnd/User/Page/Auth/Auth";
+import Auth from "./FrontEnd/User/Auth/Auth";
 import ProductList from "./FrontEnd/Product/ProductList/ProductList";
 import Navbar from "./FrontEnd/Shares/Navbar/Navbar";
-import UserList from "./FrontEnd/User/Components/UserList/UserList";
+import UserList from "./FrontEnd/User/UserList/UserList";
 import AddProduct from "./FrontEnd/Product/AddProduct/AddProduct";
 import AddCategory from "./FrontEnd/Category/AddCategory/AddCategory";
 import CategoryList from "./FrontEnd/Category/CategoryList/CategoryList";
 import UpdateCategory from "./FrontEnd/Category/UpdateCategory/UpdateCategory";
-import UserProduct from "./FrontEnd/User/Components/UserProduct/UserProduct";
+import UserProduct from "./FrontEnd/User/UserProduct/UserProduct";
 import UpdateProduct from "./FrontEnd/Product/UpdateProduct/UpdateProduct";
 import ViewProduct from "./FrontEnd/Product/ViewProduct/ViewProduct";
 import CartList from "./FrontEnd/Product/CartList/CartList";
-import UpdateUser from "./FrontEnd/User/Components/UpdateUser/UpdateUser";
-import ChangeEmail from "./FrontEnd/User/Components/ChangeEmail/ChangeEmail";
-import ChangePassword from "./FrontEnd/User/Components/ChangePassword/ChangePassword";
-import MySell from "./FrontEnd/User/Components/MySell/MySell";
+import UpdateUser from "./FrontEnd/User/UpdateUser/UpdateUser";
+import ChangeEmail from "./FrontEnd/User/ChangeEmail/ChangeEmail";
+import ChangePassword from "./FrontEnd/User/ChangePassword/ChangePassword";
+import MySell from "./FrontEnd/User/MySell/MySell";
 import { AppContext } from "./FrontEnd/Shares/Context/AppContext";
 import {
   BrowserRouter as Router,

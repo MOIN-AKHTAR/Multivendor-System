@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useFormState } from "../../../Shares/Hooks/formState";
-import Background from "../../../Shares/Background/Background";
-import Card from "../../../Shares/Card/Card";
-import Input from "../../../Shares/Input/Input";
-import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
-import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
-import { AppContext } from "../../../Shares/Context/AppContext";
-import OptimizeHook from "../../..//Shares/Hooks/OptimizeHook";
-import { VALIDATOR_REQUIRE } from "../../../Shares/Utils/Validators.js";
+import { useFormState } from "../../Shares/Hooks/formState";
+import Background from "../../Shares/Background/Background";
+import Card from "../../Shares/Card/Card";
+import Input from "../../Shares/Input/Input";
+import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
+import { useHttpHook } from "../../Shares/Hooks/httpRequest";
+import { AppContext } from "../../Shares/Context/AppContext";
+import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
+import { VALIDATOR_REQUIRE } from "../../Shares/Utils/Validators.js";
 import { useHistory, Link } from "react-router-dom";
 import "./UpdateUser.css";
 

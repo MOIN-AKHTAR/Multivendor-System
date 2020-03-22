@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import OptimizeHook from "../../../Shares/Hooks/OptimizeHook";
-import { AppContext } from "../../../Shares/Context/AppContext";
-import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
+import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
+import { AppContext } from "../../Shares/Context/AppContext";
+import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 import { Link } from "react-router-dom";
 import "./UserProductList.css";
 

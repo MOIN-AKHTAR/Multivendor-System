@@ -1,20 +1,20 @@
 import React, { useState, useContext } from "react";
-import Card from "../../../Shares/Card/Card";
-import Input from "../../../Shares/Input/Input";
-import UploadImage from "../../../Shares/UploadImage/UploadImage";
-import { useFormState } from "../../../Shares/Hooks/formState";
-import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
-import { AppContext } from "../../../Shares/Context/AppContext";
-import SelectBar from "../../../Shares/SelectBar/SelectBar";
-import OptimizeHook from "../../..//Shares/Hooks/OptimizeHook";
+import Card from "../../Shares/Card/Card";
+import Input from "../../Shares/Input/Input";
+import UploadImage from "../../Shares/UploadImage/UploadImage";
+import { useFormState } from "../../Shares/Hooks/formState";
+import { useHttpHook } from "../../Shares/Hooks/httpRequest";
+import { AppContext } from "../../Shares/Context/AppContext";
+import SelectBar from "../../Shares/SelectBar/SelectBar";
+import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
 import { useHistory } from "react-router-dom";
 import "./Auth.css";
-import "../../../Shares/Button/Button.css";
+import "../../Shares/Button/Button.css";
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL,
   VALIDATOR_REQUIRE
-} from "../../../Shares/Utils/Validators.js";
+} from "../../Shares/Utils/Validators.js";
 function Auth() {
   // ChangePath Will Direct To New Page
   const ChangePath = useHistory();

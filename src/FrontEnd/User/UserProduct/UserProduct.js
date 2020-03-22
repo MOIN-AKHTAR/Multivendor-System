@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
-import Background from "../../../Shares/Background/Background";
-import LoadingSpinner from "../../../Shares/Loading_Spinner/LoadingSpinner";
-import OptimizeHook from "../../../Shares/Hooks/OptimizeHook";
+import Background from "../../Shares/Background/Background";
+import LoadingSpinner from "../../Shares/Loading_Spinner/LoadingSpinner";
+import OptimizeHook from "../../Shares/Hooks/OptimizeHook";
 import UserProductList from "../UserProductList/UserProductList";
-import { AppContext } from "../../../Shares/Context/AppContext";
-import { useHttpHook } from "../../../Shares/Hooks/httpRequest";
+import { AppContext } from "../../Shares/Context/AppContext";
+import { useHttpHook } from "../../Shares/Hooks/httpRequest";
 
 function UserProduct() {
   // Auth Contain All Information About Currently LoggedIn User-

@@ -57,7 +57,6 @@ function UpdateProduct() {
 
   const UpdateProduct = async e => {
     e.preventDefault();
-    console.log(state);
     const formData = new FormData();
     formData.append("name", state.inputs.name.value);
     formData.append("price", state.inputs.price.value);

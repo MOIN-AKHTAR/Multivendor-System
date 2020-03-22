@@ -222,6 +222,7 @@ exports.Pay = AsyncWrapper(async (req, res, next) => {
   await Promise.all(promise);
   // Once Bill Paid  Then We Have To Empty The Items
   req.User.items = [];
+  req.User.totalAmount = 0;
   await req.User.save();
   res.status(200).json({
     Status: "Success",
