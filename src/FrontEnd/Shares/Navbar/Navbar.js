@@ -81,7 +81,7 @@ function Navbar() {
           )}
           {Auth.isLoggedIn && Auth.role === "vendor" && (
             <li>
-              <Link to="#" className="Links">
+              <Link to="/mysell" className="Links">
                 View Sell
               </Link>
             </li>

@@ -6,7 +6,7 @@ import "./SideNavBar.css";
 function SideNavBar(props) {
   const Auth = useContext(AppContext);
   return (
-    // Here ShowSideNavBar Is A FunctionWhihc Will Be Called When Yiu Click On SideNavBar's List Item-
+    // Here ShowSideNavBar Is A Function Whihc Will Be Called When Yiu Click On SideNavBar's List Item-
     <div id="Side_Nav_Bar" onClick={props.ShowSideNavBar}>
       {(!Auth.isLoggedIn || (Auth.isLoggedIn && Auth.role === "user")) && (
         <li>
@@ -59,7 +59,7 @@ function SideNavBar(props) {
       )}
       {Auth.isLoggedIn && Auth.role === "vendor" && (
         <li>
-          <Link to="#" className="Side_Links">
+          <Link to="/mysell" className="Side_Links">
             View Sell
           </Link>
         </li>

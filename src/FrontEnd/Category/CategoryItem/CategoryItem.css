@@ -1,10 +1,18 @@
 #Categories {
   position: relative;
-  width: 50%;
+  width: 70%;
   margin: 2rem auto;
 }
-#Category {
-  /*  */
+#Categories_Heading {
+  font-size: 3rem;
+  margin: 0.3rem 0rem;
+  color: white;
+  text-align: center;
+}
+.Indeivdual_Category_Heading {
+  font-size: 2rem;
+}
+.Category {
   width: 100%;
   margin: 0.2rem 0.2rem;
   display: flex;
@@ -35,5 +43,11 @@
   #Categories {
     width: 90%;
     font-size: 3rem;
+  }
+  #Categories_Heading {
+    font-size: 2rem;
+  }
+  .Indeivdual_Category_Heading {
+    font-size: 1.5rem;
   }
 }

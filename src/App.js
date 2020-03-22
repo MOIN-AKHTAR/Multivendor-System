@@ -14,6 +14,7 @@ import CartList from "./FrontEnd/Product/CartList/CartList";
 import UpdateUser from "./FrontEnd/User/Components/UpdateUser/UpdateUser";
 import ChangeEmail from "./FrontEnd/User/Components/ChangeEmail/ChangeEmail";
 import ChangePassword from "./FrontEnd/User/Components/ChangePassword/ChangePassword";
+import MySell from "./FrontEnd/User/Components/MySell/MySell";
 import { AppContext } from "./FrontEnd/Shares/Context/AppContext";
 import {
   BrowserRouter as Router,
@@ -62,7 +63,6 @@ export default function App() {
   }, []);
   useEffect(() => {
     const User = JSON.parse(localStorage.getItem("UserDetail"));
-    console.log(User);
     if (User && User.Token && new Date(User.Expiration) > new Date()) {
       logIn(
         User.Id,
@@ -114,6 +114,7 @@ export default function App() {
         <Route path="/viewProduct" component={UserProduct} />
         <Route path="/updateProduct/:Id" component={UpdateProduct} />
         <Route path="/getMe" component={UpdateUser} />
+        <Route path="/mysell" component={MySell} />
         <Route path="/email" component={ChangeEmail} />
         <Route path="/password" component={ChangePassword} />
         <Redirect to="/add" />

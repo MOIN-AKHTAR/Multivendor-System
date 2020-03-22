@@ -1,5 +1,6 @@
 const UserModel = require("../Models/UserModel");
 const ProductModel = require("../Models/ProductModel");
+const AddToCartModel = require("../Models/AddToCartModel");
 const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
 
@@ -210,5 +211,30 @@ exports.Pay = AsyncWrapper(async (req, res, next) => {
     Status: "Success",
     Count: Data.length,
     Data
+  });
+});
+
+exports.MySell = AsyncWrapper(async (req, res, next) => {
+  const Cart = await AddToCartModel.find({ vendor: req.User._id })
+    .select("product")
+    .populate("product");
+  let Arr = [];
+  Cart.forEach(Product => {
+    const Index = Arr.findIndex(prod => prod.Id === Product.product._id);
+    if (Index < 0) {
+      Arr.push({
+        Image: Product.product.image,
+        Id: Product.product._id,
+        Total: Product.product.price,
+        Quantity: 1
+      });
+    } else {
+      Arr[Index].Quantity = Arr[Index].Quantity + 1;
+      Arr[Index].Total = Arr[Index].Total + Product.product.price;
+    }
+  });
+  res.status(200).json({
+    Status: "Success",
+    Cart: Arr
   });
 });

@@ -41,12 +41,12 @@ function CategoryItem(props) {
   }
   return (
     <div id="Categories">
-      <h1 style={{ color: "white", textAlign: "center" }}>Our Categories</h1>
+      <h1 id="Categories_Heading">Our Categories</h1>
 
       <Card>
         {state.map(Category => (
-          <div id="Category" key={Category._id}>
-            <h3>{Category.name}</h3>
+          <div className="Category" key={Category._id}>
+            <h3 className="Indeivdual_Category_Heading">{Category.name}</h3>
             <div className="Btn">
               <Link to={`/updateCategory/${Category._id}`} className="Btns">
                 Update

@@ -6,6 +6,7 @@
   align-items: center;
 }
 #Logo_Btn__Section {
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,8 +31,10 @@
   background: white;
 }
 #Logo {
+  text-align: center;
   font-size: 2rem;
   font-weight: normal;
+  margin-left: 0.2rem;
 }
 ul {
   display: none;
@@ -42,9 +45,11 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   margin: 0rem 1rem;
 }
 .Links {
+  text-decoration: none;
   color: white;
   padding: 0.3rem 0.5rem;
   font-weight: bolder;
@@ -64,6 +69,12 @@ li {
   margin: 0rem;
 }
 @media (min-width: 40.625rem) {
+  #Logo {
+    font-size: 1.7rem;
+  }
+  li {
+    margin: 0rem 0.2rem;
+  }
   #Side_Btn {
     display: none;
   }
