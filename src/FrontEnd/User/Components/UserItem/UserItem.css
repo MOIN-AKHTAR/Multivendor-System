@@ -1,9 +1,9 @@
 #Vendors_Div {
   position: relative;
   display: flex;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   align-content: flex-start;
-  width: 60%;
+  width: 95%;
   margin: 0 auto;
 }
 .Individual_Vendor {
@@ -39,4 +39,10 @@
   justify-content: center;
   align-items: center;
   margin: 0px 0.8rem;
+}
+
+@media (max-width: 38rem) {
+  #Vendors_Div {
+    width: 95%;
+  }
 }

@@ -32,7 +32,8 @@ export default function App() {
   const [expirationDate, setExpirationDate] = useState();
   const logIn = useCallback((Id, Token, Role, Image, expirationTime) => {
     // Setting Time To Expire
-    let ExpireToken = expirationTime || new Date(new Date().getTime() + 10000);
+    let ExpireToken =
+      expirationTime || new Date(new Date().getTime() + 1000 * 60 * 60);
     setExpirationDate(ExpireToken);
     setIsLoggedIn(true);
     setLoggedInUser(Id);
@@ -42,10 +43,10 @@ export default function App() {
     localStorage.setItem(
       "UserDetail",
       JSON.stringify({
-        Id: Id,
-        Token: Token,
-        Role: Role,
-        Image: "http://localhost:5000/" + Image,
+        Id,
+        Token,
+        Role,
+        Image,
         Expiration: ExpireToken.toISOString()
       })
     );
@@ -61,6 +62,7 @@ export default function App() {
   }, []);
   useEffect(() => {
     const User = JSON.parse(localStorage.getItem("UserDetail"));
+    console.log(User);
     if (User && User.Token && new Date(User.Expiration) > new Date()) {
       logIn(
         User.Id,

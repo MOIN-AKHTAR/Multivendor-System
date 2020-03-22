@@ -10,14 +10,14 @@ function SideNavBar(props) {
     <div id="Side_Nav_Bar" onClick={props.ShowSideNavBar}>
       {(!Auth.isLoggedIn || (Auth.isLoggedIn && Auth.role === "user")) && (
         <li>
-          <Link to="/" className="Side_Links">
+          <Link to="/products" className="Side_Links">
             All Items
           </Link>
         </li>
       )}
       {Auth.isLoggedIn && Auth.role === "admin" && (
         <li>
-          <Link to="#" className="Side_Links">
+          <Link to="/" className="Side_Links">
             View Vendors
           </Link>
         </li>
@@ -76,6 +76,17 @@ function SideNavBar(props) {
         <li>
           <Link to="/auth" className="Side_Links" onClick={Auth.logOut}>
             Logout
+          </Link>
+        </li>
+      )}
+      {Auth.isLoggedIn && (
+        <li>
+          <Link to="/getMe" className="Side_Links image_Link">
+            <img
+              src={"http://localhost:5000/" + Auth.image}
+              alt="No Preview"
+              style={{ width: "2rem", height: "2rem", borderRadius: "50%" }}
+            />
           </Link>
         </li>
       )}

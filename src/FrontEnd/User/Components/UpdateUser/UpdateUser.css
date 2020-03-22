@@ -5,8 +5,8 @@
 }
 .Update_Btn__Section {
   display: flex;
-  justify-content: space-evenly;
-  width: 70%;
+  justify-content: space-around;
+  width: auto;
   margin: 1rem auto;
 }
 
@@ -15,4 +15,17 @@
   display: block;
   width: auto;
   margin: 0rem;
+}
+
+@media (max-width: 31.25rem) {
+  .Update_User_Btn {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+@media (max-width: 40.625rem) {
+  #UpdateName {
+    width: 90%;
+  }
 }

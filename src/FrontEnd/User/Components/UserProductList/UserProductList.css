@@ -2,7 +2,7 @@
   position: relative;
   text-align: center;
   background: white;
-  width: 80%;
+  width: 70%;
   border-radius: 10px;
   margin: 2rem auto;
   padding: 2rem auto;
@@ -12,8 +12,8 @@
   margin: 1rem auto;
 }
 .Product_Image {
-  width: 200px;
-  height: 200px;
+  width: 15rem;
+  height: 15rem;
   margin: 1rem auto;
 }
 .Product_Image > img {
@@ -49,4 +49,27 @@
   background: #ff1c4a;
   font-size: 1.5rem;
   border-radius: 10px;
+}
+
+@media (max-width: 40.725rem) {
+  #My_Products {
+    width: 90%;
+  }
+  .Individual_Products {
+    margin: 0.5rem auto;
+  }
+  .Product_Image {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+@media (max-width: 45rem) {
+  #My_Products > h1 {
+    font-size: 1.5rem;
+  }
+  .Product_Description h3,
+  .Product_Description h4,
+  .Product_Description p {
+    font-size: 1rem;
+  }
 }

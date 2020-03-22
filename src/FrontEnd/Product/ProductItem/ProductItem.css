@@ -5,6 +5,7 @@
   flex-wrap: wrap;
 }
 .Products {
+  flex: 0 0 auto;
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -14,11 +15,18 @@
   background: rgb(241, 218, 218);
   color: black;
 }
+.Product_Image_Section > img {
+  width: 100%;
+  height: 100%;
+}
 .Products:hover {
   background: rgb(15, 15, 15);
   border: 1px solid white;
   cursor: pointer;
   color: white;
+}
+.Product_Image_Section {
+  margin: 0px auto;
 }
 .Product_Button_Section {
   display: flex;
@@ -33,4 +41,11 @@
   margin: 0.3rem auto;
   display: block;
   width: 80%;
+}
+
+@media (max-width: 37.5rem) {
+  .Products {
+    width: 90%;
+    text-align: center;
+  }
 }

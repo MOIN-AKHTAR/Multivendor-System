@@ -106,15 +106,16 @@ function CartItem(props) {
     return (
       <div id="Cart_Info">
         <div id="product_Total_Section">
-          <h1>Total {myCart.totalAmount}</h1>
-          <Link to="/products" onClick={PayBill} className="Btns">
+          <h1 id="Cart_Total">Total {myCart.totalAmount}</h1>
+          <Link to="/products" onClick={PayBill} className="Btns payBill_Btn">
             Pay Bill
           </Link>
         </div>
-        <div id="Cart">
+        <div>
+          <h1 id="My_Cart_Heading">My Cart</h1>
           {myCart.items.map(Product => (
-            <div key={Product._id} className="Individual_Cart_Information">
-              <div className="Product_Image_Section">
+            <div className="My_Cart_Products" key={Product._id}>
+              <div className="Cart_Product_Image_Section">
                 <img
                   className="product_Image_Section__img"
                   src={"http://localhost:5000/" + Product.product.image}
@@ -122,17 +123,28 @@ function CartItem(props) {
                 />
               </div>
               <div className="product_Quantity_Information_Section">
-                <p>{Product.quantity}</p>
+                {Product.quantity}
               </div>
               <div className="product_PriceInformation_Section">
-                <p>{Product.total}</p>
+                {Product.total}
               </div>
               <div className="Btn_Section">
-                <button onClick={() => RemoveFromCart(Product._id)}>-</button>
-                <button onClick={() => AddToCart(Product.product._id)}>
+                <button
+                  className="Cart_Btn_Section"
+                  onClick={() => RemoveFromCart(Product._id)}
+                >
+                  -
+                </button>
+                <button
+                  className="Cart_Btn_Section"
+                  onClick={() => AddToCart(Product.product._id)}
+                >
                   +
                 </button>
-                <button onClick={() => DeletFromCart(Product.product._id)}>
+                <button
+                  className="Cart_Btn_Section"
+                  onClick={() => DeletFromCart(Product.product._id)}
+                >
                   Delete
                 </button>
               </div>

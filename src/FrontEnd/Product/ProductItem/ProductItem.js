@@ -57,6 +57,7 @@ function ProductItem(props) {
               style={{ width: "200px", height: "200px" }}
             >
               <img
+                style={{ width: "100%", height: "100%" }}
                 src={"http://localhost:5000/" + Product.image}
                 alt="No Preview"
               />

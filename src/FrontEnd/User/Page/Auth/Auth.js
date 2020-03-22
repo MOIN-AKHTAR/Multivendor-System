@@ -109,17 +109,8 @@ function Auth() {
           "POST",
           formData
         );
-        console.log(Data);
         // Preserving Info Of Currently LoggedIn User
-        Auth.logIn(Data.Id, Data.Token, Data.Role);
-        // localStorage.setItem(
-        //   "UserDetail",
-        //   JSON.stringify({
-        //     Id: Data.Id,
-        //     Token: Data.Token,
-        //     Role: Data.Role
-        //   })
-        // );
+        Auth.logIn(Data.Id, Data.Token, Data.Role, Data.Image);
         // Directing to /addCategory Path-
         ChangePath.push("/addCategory");
       } catch (error) {}
@@ -139,15 +130,7 @@ function Auth() {
         );
         // Preserving Info Of Currently LoggedIn User
         Auth.logIn(Data.Id, Data.Token, Data.Role, Data.Image);
-        // localStorage.setItem(
-        //   "UserDetail",
-        //   JSON.stringify({
-        //     Id: Data.Id,
-        //     Token: Data.Token,
-        //     Role: Data.Role,
-        //     Image: Data.Image
-        //   })
-        // );
+
         // Directing To /Items path
         ChangePath.push("/Items");
       } catch (error) {}
@@ -165,7 +148,10 @@ function Auth() {
         />
       )}
       <Card>
-        <h1 style={{ textAlign: "center", margin: "0.5rem" }}>
+        <h1
+          id="Login_Signup_H1"
+          style={{ textAlign: "center", margin: "0.5rem" }}
+        >
           {isInLogInMode ? "LogIn" : "SignUp"} Required
         </h1>
         <form onSubmit={SignupOrLogin}>
