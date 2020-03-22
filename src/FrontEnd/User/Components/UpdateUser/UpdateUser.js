@@ -83,6 +83,16 @@ function UpdateUser() {
       ChangePath.push("/products");
     }
   };
+  const DeleteMe = async e => {
+    try {
+      await makeRequest("http://localhost:5000/User/Me", "DELETE", null, {
+        Authorization: "Bearer " + Auth.token
+      });
+      Auth.logOut();
+      ChangePath.push("/");
+    } catch (error) {}
+  };
+
   const UpdateMe = async e => {
     try {
       e.preventDefault();
@@ -154,6 +164,15 @@ function UpdateUser() {
               </button>
               <Link to="/password" className="Btns Update_User_Btn">
                 Change Password
+              </Link>
+            </div>
+            <div id="Delete_Account">
+              <Link
+                to="#"
+                className="Btns Update_User_Btn Delete_Account_Button"
+                onClick={DeleteMe}
+              >
+                Delete My Account
               </Link>
             </div>
           </Card>

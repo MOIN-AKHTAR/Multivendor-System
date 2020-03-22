@@ -14,11 +14,11 @@ exports.AddToCart = AsyncWrapper(async (req, res, next) => {
     );
   }
   // If Product Does Exist Then Add To Cart And Also Add To User Item Property Which Is An Array-
-  const AddToCart = new AddToCartModle({
-    product: Product._id,
-    buyer: req.User._id,
-    vendor: Product.vendor
-  });
+  // const AddToCart = new AddToCartModle({
+  //   product: Product._id,
+  //   buyer: req.User._id,
+  //   vendor: Product.vendor
+  // });
   // Checking Whether The Item Buyer Inteded To Add Is Already Exists In His/Her Items Array-
   let Index = req.User.items.findIndex(
     Item => Item.product.toString() === Product._id.toString()
@@ -55,13 +55,14 @@ exports.AddToCart = AsyncWrapper(async (req, res, next) => {
     return next(new AppError("Server Is Not Responding", 500));
   }
   // Updating/Saving To Cart
-  await AddToCart.save();
-  if (!AddToCart) {
-    return next(new AppError("Server Is Not Responding", 500));
-  }
+  // await AddToCart.save();
+  // if (!AddToCart) {
+  //   return next(new AppError("Server Is Not Responding", 500));
+  // }
   res.status(201).json({
-    Status: "Success",
-    AddToCart
+    Status: "Success"
+    // ,
+    // AddToCart
   });
 });
 

@@ -177,7 +177,23 @@ exports.FilterProduct = AsyncWrapper(async (req, res, next) => {
 
 exports.Pay = AsyncWrapper(async (req, res, next) => {
   const Data = [];
-
+  const NewArr = [];
+  for (let i = 0; i < req.User.items.length; i++) {
+    for (let j = 0; j < req.User.items[i].quantity; j++) {
+      const AddToCart = {
+        product: req.User.items[i].product,
+        buyer: req.User._id,
+        vendor: req.User.items[i].vendor
+      };
+      NewArr.push(AddToCart);
+    }
+  }
+  const SaveToCart = NewArr.map(async Item => {
+    const AddToCart = new AddToCartModel(Item);
+    return await AddToCart.save();
+  });
+  // Storing To AddToCart
+  await Promise.all(SaveToCart);
   // Removing Redundency And Optimizing Query By Accumalating Data Related To Single Vendor
   //Into Single Object
   req.User.items.forEach(Item => {

@@ -16,7 +16,17 @@
   width: auto;
   margin: 0rem;
 }
-
+#Delete_Account {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0rem;
+}
+#Delete_Account > .Delete_Account_Button {
+  background: orange;
+}
+#Delete_Account > .Delete_Account_Button:hover {
+  background: red;
+}
 @media (max-width: 31.25rem) {
   .Update_User_Btn {
     font-size: 0.9rem;
