@@ -1,5 +1,6 @@
 const ProductModel = require("../Models/ProductModel");
 const CategoryModel = require("../Models/CategoryModel");
+const AddToCartModel = require("../Models/AddToCartModel");
 const UserModel = require("../Models/UserModel");
 const AsyncWrapper = require("../Utils/AsyncWrapper");
 const AppError = require("../Utils/AppError");
@@ -23,9 +24,9 @@ exports.AddProduct = AsyncWrapper(async (req, res, next) => {
   if (!Product) {
     return next(new AppError("Server Is Down Plz Try Again", 500));
   }
-  const User = await UserModel.findById(vendor);
-  User.items.push(Product._id);
-  await User.save();
+  // const User = await UserModel.findById(vendor);
+  // User.items.push(Product._id);
+  // await User.save();
   res.status(201).json({
     Status: "Success",
     Product
@@ -42,9 +43,10 @@ exports.RemoveProduct = AsyncWrapper(async (req, res, next) => {
   if (Product.vendor._id.toString() !== req.User._id.toString()) {
     return next(new AppError("You Are Not Allowed", 401));
   }
+  await AddToCartModel.deleteMany({ vendor: req.User._id });
   await Product.remove();
-  Product.vendor.items.pull(Product);
-  await Product.vendor.save();
+
+  // await Product.vendor.save();
 
   res.status(200).json({
     Status: "Success",

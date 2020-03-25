@@ -32,6 +32,7 @@ function MySell() {
         "GET",
         null,
         {
+          "Content-Type": "application/json",
           Authorization: "Bearer " + Auth.token
         }
       );

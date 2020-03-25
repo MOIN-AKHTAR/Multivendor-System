@@ -23,6 +23,7 @@ function CartItem(props) {
   ] = useHttpHook();
   const { Carts } = props;
   const [myCart, setMyCart] = useState(Carts);
+  console.log(myCart);
   const LoadData = async () => {
     try {
       const Data = await makeRequest(

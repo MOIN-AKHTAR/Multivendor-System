@@ -6,6 +6,7 @@ const AppError = require("../Utils/AppError");
 
 exports.SignUp = AsyncWrapper(async (req, res, next) => {
   const { firstName, lastName, email, password, role } = req.body;
+  console.log();
   const User = new UserModel({
     firstName,
     lastName,
@@ -143,6 +144,12 @@ exports.GetAll = AsyncWrapper(async (req, res, next) => {
   const Vendors = await UserModel.find({ role: "vendor" }).select(
     "-password -email -__v"
   );
+  const promise = Vendors.map(async Vendor => {
+    const Prdoucts = await ProductModel.find({ vendor: Vendor._id });
+    Vendor.myProduct = Prdoucts.length;
+    await Vendor.save();
+  });
+  await Promise.all(promise);
   res.status(200).json({
     Status: "Success",
     Count: Vendors.length,
@@ -232,12 +239,14 @@ exports.Pay = AsyncWrapper(async (req, res, next) => {
 });
 
 exports.MySell = AsyncWrapper(async (req, res, next) => {
-  const Cart = await AddToCartModel.find({ vendor: req.User._id })
-    .select("product")
-    .populate("product");
+  let Cart = await AddToCartModel.find({ vendor: req.User._id }).populate(
+    "product"
+  );
   let Arr = [];
   Cart.forEach(Product => {
-    const Index = Arr.findIndex(prod => prod.Id === Product.product._id);
+    const Index = Arr.findIndex(prod => {
+      return prod.Id === Product.product._id;
+    });
     if (Index < 0) {
       Arr.push({
         Image: Product.product.image,

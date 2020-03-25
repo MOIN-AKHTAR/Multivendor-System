@@ -22,7 +22,7 @@ function UserItem(props) {
           <p>{Vendor.lastName}</p>
         </div>
         <div className="Information">
-          <p>Items: {Vendor.items.length}</p>
+          <p>Items: {Vendor.myProduct}</p>
           <p>Total: {Vendor.totalAmount}</p>
         </div>
       </div>

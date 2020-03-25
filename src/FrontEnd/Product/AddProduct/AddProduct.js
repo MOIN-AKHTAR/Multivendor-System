@@ -84,10 +84,14 @@ function AddProduct() {
     e.preventDefault();
     try {
       const formData = new FormData();
+      console.log(state.inputs.category.value.length);
+      console.log(categories[0].value);
       formData.append("name", state.inputs.name.value);
       formData.append(
         "category",
-        categories[0].value || state.inputs.category.value
+        state.inputs.category.value.length === 0
+          ? categories[0].value
+          : state.inputs.category.value
       );
       formData.append("price", state.inputs.price.value);
       formData.append("description", state.inputs.description.value);
@@ -96,6 +100,7 @@ function AddProduct() {
       await makeRequest("http://localhost:5000/Product/", "POST", formData, {
         Authorization: "Bearer " + Auth.token
       });
+      console.log(state);
       ChangePath.push("/viewProduct");
     } catch (error) {}
   };

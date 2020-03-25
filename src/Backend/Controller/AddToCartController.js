@@ -13,12 +13,6 @@ exports.AddToCart = AsyncWrapper(async (req, res, next) => {
       new AppError("Sorry, This Product Is Not Available Anymore", 404)
     );
   }
-  // If Product Does Exist Then Add To Cart And Also Add To User Item Property Which Is An Array-
-  // const AddToCart = new AddToCartModle({
-  //   product: Product._id,
-  //   buyer: req.User._id,
-  //   vendor: Product.vendor
-  // });
   // Checking Whether The Item Buyer Inteded To Add Is Already Exists In His/Her Items Array-
   let Index = req.User.items.findIndex(
     Item => Item.product.toString() === Product._id.toString()
@@ -54,11 +48,7 @@ exports.AddToCart = AsyncWrapper(async (req, res, next) => {
   if (!req.User) {
     return next(new AppError("Server Is Not Responding", 500));
   }
-  // Updating/Saving To Cart
-  // await AddToCart.save();
-  // if (!AddToCart) {
-  //   return next(new AppError("Server Is Not Responding", 500));
-  // }
+
   res.status(201).json({
     Status: "Success"
     // ,
@@ -140,10 +130,35 @@ exports.DeleteSpecificProdcut = AsyncWrapper(async (req, res, next) => {
 
 // This Method Will Provide You The Whole Cart Of LoggedIn User-
 exports.GetMyCart = AsyncWrapper(async (req, res, next) => {
+  // Populating Product Which Will Contain Whole Info Of Product Which We Have Added To Cart
   const Cart = await UserModel.findById(req.User._id).populate("items.product");
+  let Arr = [];
+  const promise = Cart.items.map(async Product => {
+    // We will go through each item added to cart to check they are avilable still yet or not
+    if (Product.product) {
+      return await ProductModel.findById(Product.product._id);
+    }
+    return null;
+  });
+  const Data = await Promise.all(promise);
+  Data.forEach((Product, index) => {
+    // In Data we will have all the data after all promises resolve if items are available those will
+    // not be null in Data Array So We Have To Elimanate Those Which Are Null In Data Array
+    // And We i'll Store Those Items Only In Our Cart Which Are Available
+    if (Product) {
+      Arr.push(Cart.items[index]);
+    }
+  });
+  // Updating User After All Above Action
+  req.User.items = Arr;
+  req.User.totalAmount = MakeTotal(Arr);
+  await req.User.save();
+  const myCart = await UserModel.findById(req.User._id).populate(
+    "items.product"
+  );
   return res.status(200).json({
     Status: "Success",
-    Cart
+    Cart: myCart
   });
 });
 
